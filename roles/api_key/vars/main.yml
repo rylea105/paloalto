@@ -1,4 +1,4 @@
 provider:
-  ip_address: 10.77.66.130
-  username: admin
-  password: admin
+  ip_address: '10.77.66.130'
+  username: 'admin'
+  password: 'admin'
