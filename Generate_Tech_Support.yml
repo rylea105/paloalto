@@ -1,0 +1,8 @@
+---
+- name: Generate Tech Support
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - api_key
+    - generate_tech_support
