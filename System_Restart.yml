@@ -3,6 +3,5 @@
   hosts: localhost
   gather_facts: no
   roles:
-    - PaloAltoNetworks.paloaltonetworks
     - api_key
     - system_restart
