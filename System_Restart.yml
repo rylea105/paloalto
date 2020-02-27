@@ -1,0 +1,13 @@
+---
+- name: Restart Palo Alto System
+  hosts: localhost
+  gather_facts: no
+  pre_tasks:
+    - name: get api key
+      panos_api_key:
+        username: "{{ username }}"
+        password: "{{ password }}"
+        ip_address: "{{ ip_address }}"
+      register: auth
+  roles:
+    - system_restart
