@@ -1,4 +1,4 @@
 - name: get api key
-  panos_api_key: 
+  panos_op: 
     provider: "{{ provider }}"
   register: auth
