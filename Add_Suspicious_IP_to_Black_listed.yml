@@ -1,0 +1,8 @@
+---
+- name: Add_Suspicious_IP_to_Black_listed
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - api_key
+    - add_suspicious_ip_to_black_listed

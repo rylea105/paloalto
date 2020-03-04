@@ -1,0 +1,20 @@
+- name: Create IP Block-list Object
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "set address {{ block_ip }} ip-netmask {{ ip_mask }}"
+
+- name: Add IP Block-list Object group
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "set address-group {{ block_group }} static {{ block_ip }}"
+
+- name: Install Policy
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "commit"
