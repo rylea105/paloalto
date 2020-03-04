@@ -1,0 +1,10 @@
+---
+- name: Restart Process
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - api_key
+    - restart_process
+
+# extra var: software, ip_address, username, password

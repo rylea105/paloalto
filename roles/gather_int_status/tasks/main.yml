@@ -1,0 +1,12 @@
+- name: Gather nterface status
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "show interface all"
+    register: interface
+
+# - name: save interface status as file
+#   copy:
+#     content: "{{ interface }}"
+#     dest: /tmp/interface_all.txt
