@@ -7,7 +7,7 @@
   register: ha_report
 
 - set_fact:
-    ha: ha_report.stdout
+    ha: "{{ ha_report.stdout }}"
 
 - debug:
     var: ha.response.result
