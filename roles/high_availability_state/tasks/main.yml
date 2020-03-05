@@ -9,5 +9,7 @@
 - set_fact:
     ha: "{{ ha_report.stdout }}"
 
-- debug:
-    var: ha.response.result
+- name: Template a file to /root/paloalto/ha_report.csv
+  template:
+    src: /templates/ha_report.csv.j2
+    dest: /root/paloalto/ha_report.csv
