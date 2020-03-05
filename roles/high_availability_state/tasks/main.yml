@@ -4,7 +4,10 @@
       api_key: "{{ auth.api_key }}"
       ip_address: "{{ ip_address }}"
     cmd: "show high-availability state"
-  register: ha
+  register: ha_report
+
+- set_fact:
+    ha: ha_report.stdout
 
 - debug:
-    var: ha
+    var: ha.response.result
