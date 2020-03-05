@@ -27,7 +27,7 @@
     provider:
       api_key: "{{ auth.api_key }}"
       ip_address: "{{ ip_address }}"
-    cmd: "show system statistics session"
+    cmd: "show session info | match Throughput"
     register: throughtput_report
 
 - set_fact:
@@ -35,15 +35,3 @@
      mem: "{{ mem_report.stdout }}"
      disk: "{{ disk_report.stdout }}"
      throughtput: "{{ throughtput_report.stdout }}"
-
-- debug:
-    var: cpu
-
-- debug:
-    var: mem
-
-- debug:
-    var: disk
-
-- debug:
-    var: throughtput

@@ -1,0 +1,13 @@
+- name: Backup Configuration
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "save config to {{ config_name }}"
+
+# - name: Export config
+#   panos_op:
+#     provider:
+#       api_key: "{{ auth.api_key }}"
+#       ip_address: "{{ ip_address }}"
+#     cmd: "tftp export configuration from {{ config_name }} to {{ tftp_address }}"
