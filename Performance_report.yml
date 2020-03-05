@@ -1,0 +1,8 @@
+---
+- name: Performance Report
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - api_key
+    - performance_report

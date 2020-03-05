@@ -1,0 +1,49 @@
+- name: Performance CPU Report
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "show system resources | match Cpu"
+    register: cpu_report
+
+- name: Performance Memory Report
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "show system resources | match Mem"
+    register: mem_report
+
+- name: Performance Disk Report
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "show system disk-space"
+    register: disk_report
+
+- name: Performance Throughtput Report
+  panos_op:
+    provider:
+      api_key: "{{ auth.api_key }}"
+      ip_address: "{{ ip_address }}"
+    cmd: "show system statistics session"
+    register: throughtput_report
+
+- set_fact:
+     cpu: "{{ cpu_report.stdout }}"
+     mem: "{{ mem_report.stdout }}"
+     disk: "{{ disk_report.stdout }}"
+     throughtput: "{{ throughtput_report.stdout }}"
+
+- debug:
+    var: cpu
+
+- debug:
+    var: mem
+
+- debug:
+    var: disk
+
+- debug:
+    var: throughtput
