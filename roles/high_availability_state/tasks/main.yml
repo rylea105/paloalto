@@ -11,5 +11,5 @@
 
 - name: Template a file to /root/paloalto/ha_report.csv
   template:
-    src: /templates/ha_report.csv.j2
+    src: ha_report.csv.j2
     dest: /root/paloalto/ha_report.csv
