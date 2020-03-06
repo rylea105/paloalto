@@ -2,6 +2,7 @@
 - name: Restart Process
   hosts: localhost
   gather_facts: no
+  connection: local
   roles:
     - PaloAltoNetworks.paloaltonetworks
     - api_key
