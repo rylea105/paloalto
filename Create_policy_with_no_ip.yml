@@ -1,0 +1,65 @@
+---
+- name: "Scenario 2 : Create new group policy in case no group IP"
+  hosts: localhost
+  gather_facts: no
+  vars_prompt:
+
+    - name: ip_address
+      prompt: Enter Palo Alto IP address
+      private: no
+      default: "10.77.66.130"
+    - name: username
+      prompt: Enter Palo Alto username
+      private: no
+      default: "admin"
+    - name: password
+      prompt: Enter Palo Alto password
+      private: no
+      default: "admin"
+    - name: address_name
+      prompt: Enter Address Name
+      private: no
+    - name: address_ip
+      prompt: Enter Address IP
+      private: no    
+    - name: address_group_name
+      prompt: Enter Address Group Name
+      private: no
+    - name: rule_name
+      prompt: Enter rule name
+      private: no
+    - name: device_group
+      prompt: Enter device group
+      private: no
+      default: "shared"
+    - name: source_zone
+      prompt: Enter source zone
+      private: no
+      default: "any"
+    - name: source_ip
+      prompt: Enter source IP
+      private: no
+      default: "any"
+    - name: destination_zone
+      prompt: Enter destination zone
+      private: no
+      default: "any"
+    - name: destination_ip
+      prompt: Enter destination IP
+      private: no
+      default: "any"
+    - name: application
+      prompt: Enter application
+      private: no
+      default: "any"
+  vars:
+    action: allow
+  collections:
+  - paloaltonetworks.panos 
+  roles:
+  - PaloAltoNetworks.paloaltonetworks
+  - api_key
+  - add_address
+  - add_address_group
+  - add_security_rule
+  - commit
