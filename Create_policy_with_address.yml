@@ -6,43 +6,43 @@
 
     - name: ip_address
       prompt: Enter Palo Alto IP address
-
+      private: no
     - name: username
       prompt: Enter Palo Alto username
-
+      private: no
     - name: password
       prompt: Enter Palo Alto password
-
+      private: no
     - name: address_group_name
       prompt: Enter Address Group Name
-
+      private: no
     - name: address_name
       prompt: Enter Address Name
-
+      private: no
     - name: rule_name
       prompt: Enter rule name
-
+      private: no
     - name: device_group
       prompt: Enter device group
-
+      private: no
     - name: tag_name
       prompt: Enter tag name
-
+      private: no
     - name: source_zone
       prompt: Enter source zone
-
+      private: no
     - name: source_ip
       prompt: Enter source IP
-
+      private: no
     - name: destination_zone
       prompt: Enter destination zone
-
+      private: no
     - name: destination_ip
       prompt: Enter destination IP
-
+      private: no
     - name: application
       prompt: Enter application
-      
+      private: no
   vars:
     action: allow
   collections:
