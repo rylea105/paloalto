@@ -5,7 +5,6 @@
         ip_address: "{{ ip_address }}"
     device_group: "{{ device_group | default('shared')}}"
     rule_name: "{{ rule_name }}"
-    tag_name: ["{{ tag_name }}"]
     source_zone: ["{{ source_zone | default('any')}}"]
     source_ip: ["{{ source_ip | default('any')}}"]
     destination_zone: ["{{ destination_zone | default('any')}}"]
