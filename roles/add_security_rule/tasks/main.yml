@@ -1,6 +1,6 @@
 - set_fact:
-    s_ip: ["{{ source_ip.split(',') }}"]
-    d_ip: ["{{ destination_ip.split(',') }}"]
+    s_ip: ["{{ source_ip.split(',') | list}}"]
+    d_ip: ["{{ destination_ip.split(',') | list}}"]
 
 
 - name: Create Policy and add Address or Address Group into policy
@@ -10,9 +10,9 @@
         ip_address: "{{ ip_address }}"
     device_group: "{{ device_group | default('shared')}}"
     rule_name: "{{ rule_name }}"
-    source_zone: ["{{ source_zone | default('any')}}"]
-    source_ip: "{{ s_ip | default('any') | list}}"
-    destination_zone: ["{{ destination_zone | default('any')}}"]
-    destination_ip: "{{ d_ip | default('any') | list}}"
-    application: ["{{ application | default('any')}}"]
+    source_zone: ["{{ source_zone | default('any') }}"]
+    source_ip: "{{ s_ip | default('any') }}"
+    destination_zone: ["{{ destination_zone | default('any') }}"]
+    destination_ip: "{{ d_ip | default('any') }}"
+    application: ["{{ application | default('any') }}"]
     action: "{{ action }}"
