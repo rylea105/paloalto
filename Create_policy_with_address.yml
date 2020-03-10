@@ -7,12 +7,15 @@
     - name: ip_address
       prompt: Enter Palo Alto IP address
       private: no
+      default: "10.77.66.130"
     - name: username
       prompt: Enter Palo Alto username
       private: no
+      default: "admin"
     - name: password
       prompt: Enter Palo Alto password
       private: no
+      default: "admin"
     - name: address_group_name
       prompt: Enter Address Group Name
       private: no
@@ -25,24 +28,27 @@
     - name: device_group
       prompt: Enter device group
       private: no
-    - name: tag_name
-      prompt: Enter tag name
-      private: no
+      default: "shared"
     - name: source_zone
       prompt: Enter source zone
       private: no
+      default: "any"
     - name: source_ip
       prompt: Enter source IP
       private: no
+      default: "any"
     - name: destination_zone
       prompt: Enter destination zone
       private: no
+      default: "any"
     - name: destination_ip
       prompt: Enter destination IP
       private: no
+      default: "any"
     - name: application
       prompt: Enter application
       private: no
+      default: "any"
   vars:
     action: allow
   collections:
