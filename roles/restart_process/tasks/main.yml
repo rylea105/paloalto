@@ -4,4 +4,3 @@
       api_key: "{{ auth.api_key }}"
       ip_address: "{{ ip_address }}"
     cmd: "debug software restart process {{ software }} core yes"
-    register: interface
