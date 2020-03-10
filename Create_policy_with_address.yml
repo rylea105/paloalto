@@ -2,6 +2,8 @@
 - name: "Scenario 1 : Create new group policy in case already has group IP"
   hosts: localhost
   gather_facts: no
+  collections:
+  - paloaltonetworks.panos
   vars_prompt:
     - name: ip_address
       prompt: Enter Palo Alto IP address
@@ -31,8 +33,6 @@
       prompt: Enter application
   vars:
     action: allow 
-  collections:
-  - paloaltonetworks.panos
   roles:
   - add_address_group
   - add_security_rule
