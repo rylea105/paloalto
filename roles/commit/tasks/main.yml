@@ -1,0 +1,5 @@
+- name: Commit
+  panos_commit:
+    provider:
+        api_key: "{{ auth.api_key }}"
+        ip_address: "{{ ip_address }}"

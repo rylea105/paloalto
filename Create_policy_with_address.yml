@@ -1,0 +1,39 @@
+---
+- name: "Scenario 1 : Create new group policy in case already has group IP"
+  hosts: localhost
+  gather_facts: no
+  vars_prompt:
+    - name: ip_address
+      prompt: Enter Palo Alto IP address
+    - name: username
+      prompt: Enter Palo Alto username
+    - name: password
+      prompt: Enter Palo Alto password
+    - name: address_group_name
+      prompt: Enter Address Group Name
+    - name: address_name
+      prompt: Enter Address Name
+    - name: rule_name
+      prompt: Enter rule name
+    - name: device_group
+      prompt: Enter device group
+    - name: tag_name
+      prompt: Enter tag name
+    - name: source_zone
+      prompt: Enter source zone
+    - name: source_ip
+      prompt: Enter source IP
+    - name: destination_zone
+      prompt: Enter destination zone
+    - name: destination_ip
+      prompt: Enter destination IP
+    - name: application
+      prompt: Enter application
+  vars:
+    action: allow 
+  collections:
+  - paloaltonetworks.panos
+  roles:
+  - add_address_group
+  - add_security_rule
+  - commit

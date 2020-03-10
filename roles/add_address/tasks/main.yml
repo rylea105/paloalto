@@ -1,0 +1,7 @@
+  - name: Create address object
+    panos_address_object:
+      provider:
+        api_key: "{{ auth.api_key }}"
+        ip_address: "{{ ip_address }}"
+      name: "{{ address_name }}"
+      value: "{{ address_ip }}"
