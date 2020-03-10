@@ -1,7 +1,7 @@
-  - name: Add Address Group
-    panos_address_group:
-      provider:
+- name: Add Address Group
+  panos_address_group:
+    provider:
         api_key: "{{ auth.api_key }}"
         ip_address: "{{ ip_address }}"
-      name: "{{ address_group_name }}"
-      static_value: "{{ address_name }}"
+    name: "{{ address_group_name }}"
+    static_value: "{{ address_name }}"

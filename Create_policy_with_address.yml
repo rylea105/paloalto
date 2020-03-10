@@ -34,6 +34,7 @@
   vars:
     action: allow 
   roles:
+  - api_key
   - add_address_group
   - add_security_rule
   - commit
