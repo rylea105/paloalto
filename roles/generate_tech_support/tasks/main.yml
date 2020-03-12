@@ -3,4 +3,4 @@
     provider:
       api_key: "{{ auth.api_key }}"
       ip_address: "{{ ip_address }}"
-    cmd: "scp export tech-support to root@10.77.66.122:/root"
+    cmd: "request tech-support dump"
