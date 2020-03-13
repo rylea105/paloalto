@@ -48,6 +48,8 @@
       prompt: Enter application
       private: no
       default: "any"
+  vars:
+    action: allow
   collections:
   - paloaltonetworks.panos 
   roles:
