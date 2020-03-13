@@ -48,8 +48,6 @@
       prompt: Enter application
       private: no
       default: "any"
-  vars:
-    action: allow
   collections:
   - paloaltonetworks.panos 
   roles:
@@ -58,3 +56,4 @@
   - add_address_group
   - add_security_rule
   - commit
+  
