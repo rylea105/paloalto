@@ -1,32 +1,24 @@
 - name: Performance CPU Report
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: "show system resources | match Cpu"
     register: cpu_report
 
 - name: Performance Memory Report
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: "show system resources | match Mem"
     register: mem_report
 
 - name: Performance Disk Report
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: "show system disk-space"
     register: disk_report
 
 - name: Performance Throughtput Report
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: "show session info | match Throughput"
     register: throughtput_report
 

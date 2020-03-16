@@ -1,5 +1,3 @@
 - name: Restart System
   panos_restart:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"

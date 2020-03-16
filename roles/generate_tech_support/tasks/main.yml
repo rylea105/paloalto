@@ -1,6 +1,4 @@
 - name: Generate Tech Support File
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: "request tech-support dump"

@@ -1,9 +1,7 @@
 
 - name: Fail-over
   panos_op:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
+    provider: "{{ provider }}"
     cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
     cmd_is_xml: yes
   register: failover
