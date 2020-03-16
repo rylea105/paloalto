@@ -3,18 +3,6 @@
   hosts: localhost
   gather_facts: no
   vars_prompt:
-    - name: ip_address
-      prompt: Enter Palo Alto IP address
-      private: no
-      default: "10.77.66.130"
-    - name: username
-      prompt: Enter Palo Alto username
-      private: no
-      default: "admin"
-    - name: password
-      prompt: Enter Palo Alto password
-      private: no
-      default: "admin"
     - name: address_name
       prompt: Enter Address Name
       private: no

@@ -1,4 +1,4 @@
 provider:
-  ip_address: "{{ ip_address }}"
-  username: "{{ username }}"
-  password: "{{ password }}"
+  ip_address: 10.77.66.130 #"{{ ip_address }}"
+  username: admin #"{{ username }}"
+  password: admin #"{{ password }}"
