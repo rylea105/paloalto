@@ -1,0 +1,31 @@
+---
+- name: Check Palo Alto ready config
+  hosts: localhost
+  gather_facts: no
+  vars_prompt:
+  - name: ip_address
+    prompt: Enter Palo Alto IP
+    private: no
+  - name: username
+    prompt: Enter Palo Alto Username
+    private: no
+  - name: password
+    prompt: Enter Palo Alto Password
+    private: no
+  - name: initial_delay
+    prompt: Enter initial_delay
+    private: no
+    default: 120
+  - name: interval
+    prompt: Enter interval time
+    private: no
+    default: 5
+  - name: timeout
+    prompt: Enter timeout
+    private: no
+    default: 600
+  collections:
+  - paloaltonetworks.panos
+  roles:
+    - api_key
+    - check

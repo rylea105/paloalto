@@ -3,12 +3,3 @@
     provider:
       api_key: "{{ auth.api_key }}"
       ip_address: "{{ ip_address }}"
-
-- name: wait for reboot
-  panos_check:
-    provider:
-      api_key: "{{ auth.api_key }}"
-      ip_address: "{{ ip_address }}"
-    initial_delay: 120
-    interval: 5
-    timeout: 600
