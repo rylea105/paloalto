@@ -12,7 +12,8 @@
   - name: password
     prompt: Enter Palo Alto Password
     private: no
+  collections:
+  - paloaltonetworks.panos
   roles:
-    - PaloAltoNetworks.paloaltonetworks
     - api_key
     - generate_tech_support
