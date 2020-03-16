@@ -3,7 +3,6 @@
   hosts: localhost
   gather_facts: no
   vars_prompt:
-
     - name: ip_address
       prompt: Enter Palo Alto IP address
       private: no
@@ -57,7 +56,6 @@
   collections:
   - paloaltonetworks.panos 
   roles:
-  - PaloAltoNetworks.paloaltonetworks
   - api_key
   - add_address
   - add_address_group

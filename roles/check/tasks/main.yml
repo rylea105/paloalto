@@ -6,3 +6,7 @@
     initial_delay: "{{ initial_delay }}"
     interval: "{{ interval }}"
     timeout: "{{ timeout }}"
+  register: check
+
+- debug:
+    var: check

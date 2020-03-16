@@ -53,7 +53,6 @@
   collections:
   - paloaltonetworks.panos 
   roles:
-  - PaloAltoNetworks.paloaltonetworks
   - api_key
   - add_address_group
   - add_security_rule
