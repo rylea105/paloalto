@@ -6,3 +6,7 @@
       ip_address: "{{ ip_address }}"
     cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
     cmd_is_xml: yes
+  register: failover
+
+- debug:
+    var: failover
