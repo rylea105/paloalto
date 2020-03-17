@@ -25,7 +25,7 @@
   - name: 1. set facts destination_ip add input to current config
     set_fact:
       destination_ip: "{{ destination_ip.split(',') + facts.destination_ip | flatten }}"
-    when: ( destination_ip != 'any' and destination_ip not in facts.destination_ip ) and ( 'any' not in facts.destination_ip )
+    when: destination_ip != 'any' and destination_ip not in facts.destination_ip and 'any' not in facts.destination_ip
 
   - name: 2. set facts destination_ip from input only
     set_fact:
