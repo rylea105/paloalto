@@ -19,26 +19,26 @@
       source_ip: "{{ facts.source_ip }}"
     when: ( source_ip != 'any' and source_ip in facts.source_ip and 'any' not in facts.source_ip ) or (source_ip == "")
 
-  - set_fact:
-      destination_ip: "{{ destination_ip.split(',') + facts.destination_ip | flatten }}"
-    when: ( destination_ip != 'any' and destination_ip not in facts.destination_ip ) and ( 'any' not in facts.destination_ip )
+  # - set_fact:
+  #     destination_ip: "{{ destination_ip.split(',') + facts.destination_ip | flatten }}"
+  #   when: ( destination_ip != 'any' and destination_ip not in facts.destination_ip ) and ( 'any' not in facts.destination_ip )
 
-  - set_fact:
-      destination_ip: "{{ destination_ip }}"
-    when: ('any' in destination_ip or destination_ip not in facts.destination_ip or 'any' in facts.destination_ip )
+  # - set_fact:
+  #     destination_ip: "{{ destination_ip }}"
+  #   when: ('any' in destination_ip or destination_ip not in facts.destination_ip or 'any' in facts.destination_ip )
 
-  - set_fact:
-      destination_ip: "{{ facts.destination_ip }}"
-    when: ( destination_ip != 'any' and destination_ip in facts.destination_ip and 'any' not in facts.destination_ip ) or ("" in destination_ip)
+  # - set_fact:
+  #     destination_ip: "{{ facts.destination_ip }}"
+  #   when: ( destination_ip != 'any' and destination_ip in facts.destination_ip and 'any' not in facts.destination_ip ) or ("" in destination_ip)
 
-  - set_fact:
-      service: "{{ service.split(',') + facts.service | flatten }}"
-    when: ( service != 'any' and service not in facts.service ) and ( 'any' not in facts.service )
+  # - set_fact:
+  #     service: "{{ service.split(',') + facts.service | flatten }}"
+  #   when: ( service != 'any' and service not in facts.service ) and ( 'any' not in facts.service )
 
-  - set_fact:
-      service: "{{ service }}"
-    when: ('any' in service or service not in facts.service or 'any' in facts.service)
+  # - set_fact:
+  #     service: "{{ service }}"
+  #   when: ('any' in service or service not in facts.service or 'any' in facts.service)
 
-  - set_fact:
-      service: "{{ facts.service }}"
-    when: ( service != 'any' and service in facts.service and 'any' not in facts.service ) or ("" in service)
+  # - set_fact:
+  #     service: "{{ facts.service }}"
+  #   when: ( service != 'any' and service in facts.service and 'any' not in facts.service ) or ("" in service)
