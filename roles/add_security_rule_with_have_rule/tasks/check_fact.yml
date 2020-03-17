@@ -15,7 +15,7 @@
   - name: 2. set facts source_ip from input only
     set_fact:
       source_ip: "{{ source_ip }}"
-    when: ('any' in source_ip or source_ip not in facts.source_ip) and (source_ip != "")
+    when: ('any' in source_ip) and (source_ip != "")
 
   - name: 3. set facts source_ip same config
     set_fact:
@@ -30,7 +30,7 @@
   - name: 2. set facts destination_ip from input only
     set_fact:
       destination_ip: "{{ destination_ip }}"
-    when: ('any' in destination_ip or destination_ip not in facts.destination_ip ) and (destination_ip != "")
+    when: ('any' in destination_ip) and (destination_ip != "")
 
   - name: 3. set facts destination_ip same config
     set_fact:
