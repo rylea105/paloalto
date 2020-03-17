@@ -12,30 +12,18 @@
     - name: rule_name
       prompt: Enter rule name
       private: no
-    - name: device_group
-      prompt: Enter device group
-      private: no
-      default: "shared"
-    - name: source_zone
-      prompt: Enter source zone
-      private: no
-      default: "any"
     - name: source_ip
       prompt: Enter source IP
-      private: no
-      default: "any"
-    - name: destination_zone
-      prompt: Enter destination zone
       private: no
       default: "any"
     - name: destination_ip
       prompt: Enter destination IP
       private: no
       default: "any"
-    - name: application
-      prompt: Enter application
+    - name: service
+      prompt: Enter service
       private: no
-      default: "any"
+      default: "application-default"
   vars:
     action: allow
   collections:
@@ -44,6 +32,6 @@
   - PaloAltoNetworks.paloaltonetworks
   - api_key
   - add_address_group
-  - add_security_rule
+  - add_security_rule_with_have_rule
   - commit
   

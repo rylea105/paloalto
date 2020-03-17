@@ -6,11 +6,12 @@
 - name: Create Policy and add Address or Address Group into policy
   panos_security_rule:
     provider: "{{ provider }}"
-    device_group: "{{ device_group | default('shared')}}"
+    device_group: "shared"
     rule_name: "{{ rule_name }}"
-    source_zone: ["{{ source_zone | default('any') }}"]
-    source_ip: ["{{ source_ip | default('any') }}"]
-    destination_zone: ["{{ destination_zone | default('any') }}"]
-    destination_ip: ["{{ destination_ip | default('any') }}"]
-    application: ["{{ application | default('any') }}"]
+    source_zone: "any"
+    source_ip: ["{{ source_ip }}"]
+    destination_zone: "any"
+    destination_ip: ["{{ destination_ip }}"]
+    application: "any"
     action: "{{ action }}"
+    service: ["{{ service }}"]
