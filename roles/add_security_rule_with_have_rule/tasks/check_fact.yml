@@ -50,4 +50,4 @@
   - name: 3. set facts service same config
     set_fact:
       service: "{{ facts.service }}"
-    when: (service in facts.service and 'any' not in facts.service ) or (service == "")
+    when: (service in facts.service and service != "application-default") or (service == "") 
