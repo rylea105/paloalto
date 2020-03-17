@@ -7,17 +7,20 @@
   - set_fact:
        facts: "{{ sec_rules.spec }}"
 
-  - set_fact:
+  - name: set facts add input to current config
+    set_fact:
       source_ip: "{{ source_ip.split(',') + facts.source_ip | flatten }}"
-    when: ( source_ip != 'any' and source_ip not in facts.source_ip ) and ( 'any' not in facts.source_ip )
+    when: source_ip != 'any' and source_ip not in facts.source_ip and 'any' not in facts.source_ip
 
-  - set_fact:
+  - name: set facts from input only
+    set_fact:
       source_ip: "{{ source_ip }}"
     when: ('any' in source_ip or source_ip not in facts.source_ip or 'any' in facts.source_ip )
 
-  - set_fact:
+  - name: set facts same config
+    set_fact:
       source_ip: "{{ facts.source_ip }}"
-    when: ( source_ip != 'any' and source_ip in facts.source_ip and 'any' not in facts.source_ip ) or (source_ip == "")
+    when: source_ip != 'any' and source_ip in facts.source_ip and 'any' not in facts.source_ip or source_ip == ""
 
   # - set_fact:
   #     destination_ip: "{{ destination_ip.split(',') + facts.destination_ip | flatten }}"
