@@ -1,14 +1,8 @@
 ---
-- name: "Scenario 1 : Create new group policy in case already has group IP"
+- name: "Scenario 3 : Add only IP into existing policy"
   hosts: localhost
   gather_facts: no
   vars_prompt:
-    - name: address_group_name
-      prompt: Enter Address Group Name
-      private: no
-    - name: address_name
-      prompt: Enter Address Name
-      private: no
     - name: rule_name
       prompt: Enter rule name
       private: no
@@ -31,7 +25,6 @@
   roles:
   - PaloAltoNetworks.paloaltonetworks
   - api_key
-  - add_address_group
   - add_security_rule_with_have_rule
   - commit
   
