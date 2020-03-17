@@ -42,6 +42,11 @@
       service: "{{ service.split(',') + facts.service | flatten }}"
     when: (service not in facts.service ) and (service != "")
 
+  - name: 2. set facts service add application-default
+    set_fact:
+      service: "{{ service }}"
+    when: (service == "application-default" ) and (service != "")
+
   - name: 3. set facts service same config
     set_fact:
       service: "{{ facts.service }}"
