@@ -37,7 +37,7 @@
 
   - set_fact:
       service: "{{ service }}"
-    when: ('any' service or service not in facts.service or 'any' in facts.service)
+    when: ('any' in service or service not in facts.service or 'any' in facts.service)
 
   - set_fact:
       service: "{{ facts.service }}"
