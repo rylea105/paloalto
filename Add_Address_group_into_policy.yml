@@ -9,11 +9,9 @@
     - name: source_ip
       prompt: Enter source IP
       private: no
-      default: "any"
     - name: destination_ip
       prompt: Enter destination IP
       private: no
-      default: "any"
     - name: service
       prompt: Enter service
       private: no
