@@ -35,7 +35,7 @@
   - name: 3. set facts destination_ip same config
     set_fact:
       destination_ip: "{{ facts.destination_ip }}"
-    when: ( destination_ip != 'any' and destination_ip in facts.destination_ip and 'any' not in facts.destination_ip ) or ("" in destination_ip)
+    when: destination_ip != 'any' and destination_ip in facts.destination_ip and 'any' not in facts.destination_ip or destination_ip == ""
 
   # - set_fact:
   #     service: "{{ service.split(',') + facts.service | flatten }}"
