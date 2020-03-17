@@ -15,7 +15,6 @@
     - name: service
       prompt: Enter service
       private: no
-      default: "application-default"
   vars:
     action: allow
   collections:
