@@ -8,7 +8,7 @@
       private: no
     - name: address_ip
       prompt: Enter Address IP
-      private: no    
+      private: no
     - name: address_group_name
       prompt: Enter Address Group Name
       private: no
