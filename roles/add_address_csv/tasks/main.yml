@@ -5,6 +5,7 @@
       value: "{{ item.source_ip | ipaddr('network/prefix') }}"
     loop: "{{ policy }}"
     when: item.source_ip | ipaddr('network/prefix') != ""
+    ignore_errors: yes
 
   - name: Create address object source_ip
     panos_address_object:
@@ -13,6 +14,7 @@
       value: "{{ item.source_ip | ipaddr('host/prefix') }}"
     loop: "{{ policy }}"
     when: item.source_ip | ipaddr('host/prefix') != ""
+    ignore_errors: yes
 
   - name: Create address object destination_ip
     panos_address_object:
@@ -21,6 +23,7 @@
       value: "{{ item.destination_ip | ipaddr('network/prefix') }}"
     loop: "{{ policy }}"
     when: item.destination_ip | ipaddr('network/prefix') != ""
+    ignore_errors: yes
 
   - name: Create address object destination_ip
     panos_address_object:
@@ -29,3 +32,4 @@
       value: "{{ item.destination_ip | ipaddr('host/prefix') }}"
     loop: "{{ policy }}"
     when: item.destination_ip | ipaddr('host/prefix') != ""
+    ignore_errors: yes
