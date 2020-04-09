@@ -8,3 +8,4 @@
     - PaloAltoNetworks.paloaltonetworks
     - read_csv
     - add_address_csv
+    - add_policy_csv

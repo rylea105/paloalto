@@ -1,0 +1,88 @@
+  # - name: Get a list of all security rules
+  #   panos_security_rule_facts:
+  #     provider: "{{ provider }}"
+  #     rule_name: "{{ rule_name }}"
+  #   register: sec_rules
+
+  # - set_fact:
+  #      facts: "{{ sec_rules.spec }}"
+
+  # - name: 1. set facts source_ip add input to current config
+  #   set_fact:
+  #     source_ip: "{{ source_ip.split(',') + facts.source_ip | flatten }}"
+  #   when: (source_ip != 'any' and source_ip not in facts.source_ip and 'any' not in facts.source_ip) and (source_ip != "")
+
+  # - name: 2. set facts source_ip from input only
+  #   set_fact:
+  #     source_ip: "{{ source_ip }}"
+  #   when: ('any' in source_ip) and (source_ip != "")
+
+  # - name: 3. set facts source_ip same config
+  #   set_fact:
+  #     source_ip: "{{ facts.source_ip }}"
+  #   when: (source_ip != 'any') and (source_ip in facts.source_ip) and ('any' not in facts.source_ip) or (source_ip == "")
+
+  # - name: 1. set facts destination_ip add input to current config
+  #   set_fact:
+  #     destination_ip: "{{ destination_ip.split(',') + facts.destination_ip | flatten }}"
+  #   when: (destination_ip != 'any') and (destination_ip not in facts.destination_ip) and ('any' not in facts.destination_ip) and (destination_ip != "")
+
+  # - name: 2. set facts destination_ip from input only
+  #   set_fact:
+  #     destination_ip: "{{ destination_ip }}"
+  #   when: ('any' in destination_ip) and (destination_ip != "")
+
+  # - name: 3. set facts destination_ip same config
+  #   set_fact:
+  #     destination_ip: "{{ facts.destination_ip }}"
+  #   when: (destination_ip != 'any') and (destination_ip in facts.destination_ip) and ('any' not in facts.destination_ip) or (destination_ip == "")
+
+  # - name: 1. set facts service add input to current config
+  #   set_fact:
+  #     service: "{{ service.split(',') + facts.service | flatten }}"
+  #   when: (service not in facts.service ) and (service != "")
+
+  # - name: 2. set facts service add application-default
+  #   set_fact:
+  #     service: "{{ service }}"
+  #   when: (service == "application-default" ) and (service != "")
+
+  # - name: 3. set facts service same config
+  #   set_fact:
+  #     service: "{{ facts.service }}"
+  #   when: (service in facts.service and service != "application-default") or (service == "")
+  - name: Get rule
+    panos_security_rule_facts:
+      provider: '{{ provider }}'
+      rule_name: "{{ policy.policy_name }}"
+    register: rule
+    ignore_errors: yes
+
+  - name: set source name
+    set_fact:
+      source_name: "{{ source_name + [item.source_name] }}"
+    loop: "{{ policy.list }}"
+    vars:
+      source_name: []
+    when: ((item.source_ip != "") and ( policy.policy_name == item.policy_name)) and (rule is failed)
+
+  - name: set destination ip
+    set_fact:
+      destination_name: "{{ destination_name + [item.destination_name] }}"
+    loop: "{{ policy.list }}"
+    vars:
+      destination_name: []
+    when: ((item.destination_ip != "") and (policy.policy_name == item.policy_name)) and (rule is failed)
+
+  - name: Create Policy and add Address or Address Group into policy
+    panos_security_rule:
+      provider: "{{ provider }}"
+      device_group: "shared"
+      rule_name: "{{ policy.policy_name }}"
+      source_zone: "any"
+      source_ip: "{{ source_name  }}"
+      destination_zone: "any"
+      destination_ip: "{{ destination_name }}"
+      action: "allow"
+      service: "application-default"
+    when: rule is failed
