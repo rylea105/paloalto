@@ -2,7 +2,7 @@
   include_tasks: add_policy.yml
   loop: "{{ policy.list }}"
   loop_control:
-    loop_var: policy
+    loop_var: rule_policy
 
 
 
