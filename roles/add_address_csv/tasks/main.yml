@@ -3,7 +3,7 @@
       provider: "{{ provider }}"
       name: "{{ item.source_ip | ipaddr('network')}}"
       value: "{{ item.source_ip | ipv4 }}"
-    loop: "{{ policy }}"
+    loop: "{{ policy.list }}"
     when: item.source_ip != ""
     ignore_errors: yes
 
@@ -12,6 +12,6 @@
       provider: "{{ provider }}"
       name: "{{ item.destination_ip | ipaddr('network')}}"
       value: "{{ item.destination_ip | ipv4 }}"
-    loop: "{{ policy }}"
+    loop: "{{ policy.list }}"
     when: item.destination_ip != "" 
     ignore_errors: yes
