@@ -1,6 +1,6 @@
   - set_fact:
       rule_name: "{{ item.policy_name }}"
-    
+
   - name: Get rule
     panos_security_rule_facts:
       provider: '{{ provider }}'
