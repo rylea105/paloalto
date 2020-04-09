@@ -1,0 +1,8 @@
+  - name: Read policy
+    read_csv:
+      path: /var/tmp/docker/policy.csv
+    register: policy
+    delegate_to: localhost
+
+  - set_fact:
+      policy: "{{ policy.list }}" 

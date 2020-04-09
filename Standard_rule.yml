@@ -1,0 +1,10 @@
+---
+- name: Create Statndard Rule
+  hosts: localhost
+  gather_facts: no
+  collections:
+  - paloaltonetworks.panos
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - read_csv
+    - add_address_csv

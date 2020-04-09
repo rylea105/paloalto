@@ -1,0 +1,15 @@
+- name: import set facts
+  import_tasks: check_fact.yml
+
+- name: Create Policy and add Address or Address Group into policy
+  panos_security_rule:
+    provider: "{{ provider }}"
+    device_group: "shared"
+    rule_name: "{{ rule_name }}"
+    source_zone: "any"
+    source_ip: "{{ source_ip  }}"
+    destination_zone: "any"
+    destination_ip: "{{ destination_ip  }}"
+    application: "any"
+    action: "{{ action }}"
+    service: "{{ service }}"
