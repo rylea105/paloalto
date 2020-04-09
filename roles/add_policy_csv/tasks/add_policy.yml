@@ -1,7 +1,10 @@
+  - set_fact:
+      rule_name: "{{ item.policy_name }}"
+    
   - name: Get rule
     panos_security_rule_facts:
       provider: '{{ provider }}'
-      rule_name: "{{ rule_policy.policy_name }}"
+      rule_name: "{{ rule_name }}"
     register: rule
     ignore_errors: yes
 
@@ -11,7 +14,7 @@
     loop: "{{ policy.list }}"
     vars:
       source_name: []
-    when: ((item.source_ip != "") and ( rule_policy.policy_name == item.policy_name)) and (rule is failed)
+    when: (item.source_ip != "") and ( rule_name == item.policy_name) and (rule is failed)
 
   - name: set destination ip
     set_fact:
@@ -19,13 +22,13 @@
     loop: "{{ policy.list }}"
     vars:
       destination_name: []
-    when: ((item.destination_ip != "") and (rule_policy.policy_name == item.policy_name)) and (rule is failed)
+    when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
   - name: Create Policy and add Address or Address Group into policy
     panos_security_rule:
       provider: "{{ provider }}"
       device_group: "shared"
-      rule_name: "{{ rule_policy.policy_name }}"
+      rule_name: "{{ rule_name }}"
       source_zone: "any"
       source_ip: "{{ source_name  }}"
       destination_zone: "any"
