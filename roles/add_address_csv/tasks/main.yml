@@ -9,7 +9,7 @@
   - name: Create address object source_ip
     panos_address_object:
       provider: "{{ provider }}"
-      name: "{{ item.source_ip | ipaddr('host')}}"
+      name: "{{ item.source_ip | ipaddr('network')}}"
       value: "{{ item.source_ip | ipaddr('host/prefix') }}"
     loop: "{{ policy }}"
     when: item.source_ip != ""
@@ -25,7 +25,7 @@
   - name: Create address object destination_ip
     panos_address_object:
       provider: "{{ provider }}"
-      name: "{{ item.destination_ip | ipaddr('host')}}"
+      name: "{{ item.destination_ip | ipaddr('network')}}"
       value: "{{ item.destination_ip | ipaddr('host/prefix') }}"
     loop: "{{ policy }}"
     when: item.destination_ip != ""
