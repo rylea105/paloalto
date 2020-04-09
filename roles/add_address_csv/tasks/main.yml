@@ -1,15 +1,15 @@
   - name: Create address object
     panos_address_object:
       provider: "{{ provider }}"
-      name: "{{ item.source_ip }}"
-      value: "{{ item.source_ip }}"
+      name: "{{ item.source_ip | ipaddr('network/prefix')}}"
+      value: "{{ item.source_ip | ipaddr('network/prefix')}}"
     loop: "{{ policy }}"
     when: item.source_ip != ""
 
   - name: Create address object
     panos_address_object:
       provider: "{{ provider }}"
-      name: "{{ item.destination_ip }}"
-      value: "{{ item.destination_ip }}"
+      name: "{{ item.destination_ip | ipaddr('network/prefix')}}"
+      value: "{{ item.destination_ip | ipaddr('network/prefix')}}"
     loop: "{{ policy }}"
     when: item.destination_ip != ""
