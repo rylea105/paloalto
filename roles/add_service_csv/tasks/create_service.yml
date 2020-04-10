@@ -1,7 +1,6 @@
   - set_fact:
-       service: "{{ item.service.split(',\n') }}"
+       service_list: "{{ item.service.split(',\n') }}"
     loop: "{{ policy.list }}"
-    when: item.service != ""
   
   - name: Create service object
     panos_service_object:
@@ -10,4 +9,3 @@
       destination_port: "{{ item.service }}"
       protocol: "{{ item.service_type }}"
     loop: "{{ service }}"
-    when: item.service != ""
