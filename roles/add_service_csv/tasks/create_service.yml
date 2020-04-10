@@ -1,7 +1,6 @@
   - set_fact:
        service_list: "{{ rule_service.service.split(',\n') }}"
        service_list_type: "{{ rule_service.service_type }}"
-    # loop: "{{ policy.list }}"
     when: (rule_service.service != "")
 
   - name: Create service object
@@ -11,11 +10,3 @@
       destination_port: "{{ item }}"
       protocol: "{{ service_list_type }}"
     loop: "{{ service_list }}"
-
-  - set_fact:
-      service_name: "{{ service_name + [service_list_type +'-'+ item] }}"
-      cacheable: yes
-    loop: "{{ service_list }}"
-    vars:
-      service_name: []
-    when: service_list_type+'-'+item not in service_name
