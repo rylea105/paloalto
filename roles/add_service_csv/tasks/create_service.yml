@@ -1,6 +1,7 @@
   - set_fact:
        service_list: "{{ item.service.split(',\n') }}"
     loop: "{{ policy.list }}"
+    when: (item.service != "")
   
   - name: Create service object
     panos_service_object:
