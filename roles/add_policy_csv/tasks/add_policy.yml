@@ -25,8 +25,10 @@
     when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
   - set_fact:
-       service: "{{ item.service.split(',\n') }}"
+       service: "{{ item.service_Type }}-{{ item.service.split(',\n') }}"
     loop: "{{ policy.list }}"
+    vars:
+      service_name: []
     when: (item.service != "") and (rule_name == item.policy_name) and (rule is failed)
 
   - name: Create Policy and add Address or Address Group into policy

@@ -4,6 +4,13 @@
     # loop: "{{ policy.list }}"
     when: (rule_service.service != "")
   
+  - set_fact:
+      service_name: "{{ service_name + [service_list_type+'-'+item] }}"
+    loop: "{{ service_list }}"
+    vars:
+      service_name: []
+    when: service_list_type+'-'+item not in service_list_type+'-'+item
+  
   - name: Create service object
     panos_service_object:
       provider: '{{ provider }}'
