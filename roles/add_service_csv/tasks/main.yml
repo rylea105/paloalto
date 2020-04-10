@@ -1,0 +1,7 @@
+
+- name: include create_service
+  include_tasks: create_service.yml
+  loop: "{{ policy.list }}"
+  loop_control:
+    loop_var: rule_service
+  when: item.service != ""

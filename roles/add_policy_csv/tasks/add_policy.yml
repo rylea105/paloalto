@@ -24,6 +24,11 @@
       destination_name: []
     when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
+  - set_fact:
+       service: "{{ item.service.split(',\n') }}"
+    loop: "{{ policy.list }}"
+    when: (item.service != "") and (rule_name == item.policy_name) and (rule is failed)
+
   - name: Create Policy and add Address or Address Group into policy
     panos_security_rule:
       provider: "{{ provider }}"
@@ -34,5 +39,5 @@
       destination_zone: "any"
       destination_ip: "{{ destination_name }}"
       action: "allow"
-      service: "application-default"
+      service: "{{ service }}"
     when: rule is failed
