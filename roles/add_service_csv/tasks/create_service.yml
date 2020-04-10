@@ -9,4 +9,4 @@
       name: "{{ item.service_type }}-{{ item.service }}"
       destination_port: "{{ item.service }}"
       protocol: "{{ item.service_type }}"
-    loop: "{{ service }}"
+    loop: "{{ service_list }}"
