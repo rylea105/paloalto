@@ -43,8 +43,6 @@
 
   - set_fact:
        application_list: "{{ rule_policy.application.split(',\n') }}"
-    vars:
-      application_list: 'any'
     when: (rule_policy.application != "")
 
   - name: Create Policy and add Address or Address Group into policy
@@ -64,7 +62,11 @@
   - set_fact:
       source_name: []
       destination_name: []
+      service_name: []
     when: rule_policy.service == ""
-    
+
+  - set_fact:
+      application_list: 'any'
+    when: rule_policy.application == ""
 
     
