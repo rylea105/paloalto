@@ -4,5 +4,5 @@
   loop: "{{ policy.list }}"
   loop_control:
     loop_var: rule_service
-  when: rule_service.service != ""
+  when: rule_service.service != "" and rule_service.service != 'any'
   
