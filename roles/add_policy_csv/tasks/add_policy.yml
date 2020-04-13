@@ -25,11 +25,17 @@
     when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
   - set_fact:
-       service_list: "{{ service_list + [item.service_type +'-'+ item.service.split(',\n')] }}"
-    loop: "{{ policy.list }}"
-    when: (rule_policy.service != "") and (rule_name == item.policy_name) and (rule is failed)
+       service_list: "{{ item.service.split(',\n') }}"
+       service_list_type: "{{ rule_policy.service_type }}"
+    when: (rule_policy.service != "") and (rule_name == item.policy_name)
+
+  - set_fact:
+      service_name: "{{ service_name + [service_list_type +'-'+ item] }}"
+      cacheable: yes
+    loop: "{{ service_list }}"
     vars:
-      service_list: []
+      service_name: []
+    when: ( service_type +'-'+ item not in service_name) and (rule_policy.service != "")
 
   - set_fact:
        application_list: "{{ rule_policy.application.split(',\n') }}"
@@ -47,4 +53,4 @@
       action: "allow"
       service: "{{ service_name }}"
       application: "{{ application_list }}"
-    when: rule is failed
+    when: rule is failed or rule_policy.service != ""
