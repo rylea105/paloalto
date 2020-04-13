@@ -24,19 +24,22 @@
       destination_name: []
     when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
-  # - set_fact:
-  #      service_list: "{{ rule_policy.service.split(',\n') }}"
-  #      service_list_type: "{{ rule_policy.service_type }}"
-  #   when: (rule_policy.service != "")
+  - set_fact:
+       service_list: "{{ service_list + [rule_policy.service.split(',\n')] }}"
+       service_list_type: "{{ rule_policy.service_type }}"
+    loop: "{{ policy.list }}"
+    when: (rule_policy.service != "") and (rule_name == item.policy_name) and (rule is failed)
+    vars:
+      service_list: []
 
   - set_fact:
-      service_name: "{{ service_name + [item.service_type +'-'+ item.service] }}"
+      service_name: "{{ service_name + [service_list_type +'-'+ item] }}"
       cacheable: yes
-    loop: "{{ policy.list }}"
+    loop: "{{ service_list }}"
     vars:
       service_name: []
-    when: (item.service_type +'-'+ item.service not in service_name) and (rule_policy.service != "") and (rule is failed) and (rule_name == item.policy_name)
-
+    when: (item.service_type +'-'+ item.service not in service_name) and (rule_policy.service != "") and (rule is failed)
+    
   - set_fact:
        application_list: "{{ rule_policy.application.split(',\n') }}"
     when: (rule_policy.application != "")
