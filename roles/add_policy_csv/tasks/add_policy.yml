@@ -25,9 +25,9 @@
     when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
 
   - set_fact:
-       service_list: "{{ item.service.split(',\n') }}"
+       service_list: "{{ rule_policy.service.split(',\n') }}"
        service_list_type: "{{ rule_policy.service_type }}"
-    when: (rule_policy.service != "") and (rule_name == item.policy_name)
+    when: (rule_policy.service != "")
 
   - set_fact:
       service_name: "{{ service_name + [service_list_type +'-'+ item] }}"
