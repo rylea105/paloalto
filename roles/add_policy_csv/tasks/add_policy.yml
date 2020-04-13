@@ -58,3 +58,11 @@
       service: "{{ service_name }}"
       application: "{{ application_list }}"
     when: (rule is failed) or (rule_policy.service != "")
+
+  - set_fact:
+      application_list: "any"
+      service_name: "any"
+      destination_name: []
+      source_name: []
+
+    
