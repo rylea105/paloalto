@@ -62,7 +62,7 @@
   - set_fact:
       application_list: "any"
       service_name: "any"
-      destination_name: []
-      source_name: []
+      destination_name: ""
+      source_name: ""
 
     
