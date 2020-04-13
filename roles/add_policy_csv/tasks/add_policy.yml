@@ -37,6 +37,10 @@
       service_name: []
     when: (service_list_type+'-'+item not in service_name) and (rule_policy.service != "") and (rule_name == item.policy_name) and (rule is failed)
 
+  - set_fact:
+       application_list: "{{ rule_policy.application.split(',\n') }}"
+    when: (rule_policy.application != "")
+
   - name: Create Policy and add Address or Address Group into policy
     panos_security_rule:
       provider: "{{ provider }}"
@@ -48,4 +52,5 @@
       destination_ip: "{{ destination_name }}"
       action: "allow"
       service: "{{ service_name }}"
+      application: "{{ application_list }}"
     when: rule is failed
