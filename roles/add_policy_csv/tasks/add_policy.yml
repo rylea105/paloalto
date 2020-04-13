@@ -63,6 +63,8 @@
 
   - set_fact:
       source_name: []
-      destination_name: [] 
+      destination_name: []
+    when: rule_policy.service == ""
+    
 
     
