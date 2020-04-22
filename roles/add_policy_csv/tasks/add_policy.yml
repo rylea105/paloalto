@@ -31,7 +31,6 @@
     loop_control:
       loop_var: policy_list
 
-
   - name: set service_list and service_list_type if service != 'any'
     set_fact:
        service_list: "{{ rule_policy.service.split(',\n') }}"
@@ -45,7 +44,7 @@
     loop: "{{ service_list }}"
     vars:
       service_name: []
-    when: ( service_list_type +'-'+ item not in service_name) and (rule_policy.service != "") and (rule_policy.service != 'any') and item != ""
+    when: ( service_list_type +'-'+ item not in service_name) and (rule_policy.service != "") and (rule_policy.service != 'any') and (item != "")
 
   - name: set service_name if service == 'any'
     set_fact:
