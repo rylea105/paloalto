@@ -1,0 +1,35 @@
+  - name: Retrieve address object
+    panos_object_facts:
+      provider: '{{ provider }}'
+      name: "{{ policy_list.source_name }}"
+      object_type: 'address'
+    register: source_result
+
+  - name: Retrieve address object
+    panos_object_facts:
+      provider: '{{ provider }}'
+      name: "{{ policy_list.destination_name }}"
+      object_type: 'address'
+    register: destination_result
+
+  - debug:
+      var: source_result
+
+  - debug:
+      var: destination_result
+
+  - name: set source name
+    set_fact:
+      source_name: "{{ source_name + [policy_list.source_name] }}"
+    # loop: "{{ policy.list }}"
+    vars:
+      source_name: []
+    when: (policy_list.source_ip != "") and ( rule_name == policy_list.policy_name) and (rule is failed) and ( source_result is succeeded )
+
+  - name: set destination ip
+    set_fact:
+      destination_name: "{{ destination_name + [policy_list.destination_name] }}"
+    # loop: "{{ policy.list }}"
+    vars:
+      destination_name: []
+    when: (policy_list.destination_ip != "") and (rule_name == policy_list.policy_name) and (rule is failed) and ( destination_result is succeeded )
