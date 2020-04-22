@@ -44,4 +44,4 @@
     # loop: "{{ policy.list }}"
     vars:
       destination_name: []
-    when: (policy_list.destination_ip != "") and (rule_name == policy_list.policy_name) and (rule is failed) and ( destination_result.objects is not failed)
+    when: (policy_list.destination_ip != "") and (rule_name == policy_list.policy_name) and (rule is failed) and ( destination_result_check.objects is not failed)
