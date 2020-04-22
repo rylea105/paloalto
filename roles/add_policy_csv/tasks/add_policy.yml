@@ -62,6 +62,11 @@
        application_list: "{{ rule_policy.application.split(',\n') }}"
     when: (rule_policy.application != "")
 
+  - name: set application_list
+    set_fact:
+       application_list: "any"
+    when: (rule_policy.application == "")
+
   - name: Create Policy and add Address or Address Group into policy
     panos_security_rule:
       provider: "{{ provider }}"
