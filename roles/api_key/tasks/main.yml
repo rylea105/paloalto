@@ -1,4 +1,7 @@
 - name: get api key
   panos_api_key: 
-    provider: "{{ provider }}"
+    provider: 
+        ip_address: "{{ ip_address }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
   register: auth
