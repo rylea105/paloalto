@@ -1,5 +1,5 @@
 - name: get api key
-  panos_api_key: 
+  panos_op: 
     provider: 
         ip_address: "{{ ip_address }}"
         username: "{{ username }}"

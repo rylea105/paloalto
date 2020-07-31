@@ -6,6 +6,6 @@
   - paloaltonetworks.panos
 
   roles:
-    - api_key
+    # - api_key
     - high_availability_state
     - fail_over
