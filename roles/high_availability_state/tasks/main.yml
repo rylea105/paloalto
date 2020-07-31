@@ -1,9 +1,6 @@
 - name: high-availability state
   panos_op:
-    provider:
-      ip_address: "{{ ip_address }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+    provider: "{{ provider }}"
     cmd: "show high-availability state"
   register: ha_report
 
