@@ -3,6 +3,15 @@
   hosts: localhost
   gather_facts: no
   vars_prompt:
+  - name: ip_address
+    prompt: Enter Palo Alto IP
+    private: no
+  - name: username
+    prompt: Enter Palo Alto Username
+    private: no
+  - name: password
+    prompt: Enter Palo Alto Password
+    private: no
   collections:
   - paloaltonetworks.panos
   roles:

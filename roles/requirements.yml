@@ -1,6 +1,5 @@
 ---
 collections:
-# CyberArk ansible-galaxy collection install cyberark.pas
 - name: paloaltonetworks.panos
   version: 1.1.0
   source: https://galaxy.ansible.com
