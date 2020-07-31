@@ -1,0 +1,96 @@
+  - name: set rule_name
+    set_fact:
+      rule_name: "{{ rule_policy.policy_name }}"
+
+  - name: Get rule
+    panos_security_rule_facts:
+      provider: '{{ provider }}'
+      rule_name: "{{ rule_name }}"
+    register: rule
+    ignore_errors: yes
+
+  - name: set source name
+    set_fact:
+      source_name_var: "{{ source_name + [item.source_name] }}"
+    loop: "{{ policy.list }}"
+    vars:
+      source_name: []
+    when: (item.source_ip != "") and ( rule_name == item.policy_name) and (rule is failed)
+
+  - name: set destination ip
+    set_fact:
+      destination_name_var: "{{ destination_name + [item.destination_name] }}"
+    loop: "{{ policy.list }}"
+    vars:
+      destination_name: []
+    when: (item.destination_ip != "") and (rule_name == item.policy_name) and (rule is failed)
+
+  - name: set fact for add to policy
+    include_tasks: set_fact_to_policy.yml
+    loop: "{{ policy.list }}"
+    loop_control:
+      loop_var: policy_list
+
+  - debug:
+      var: source_name
+
+  - debug:
+      var: destination_name
+  
+  - name: set service_list and service_list_type if service != 'any'
+    set_fact:
+       service_list: "{{ rule_policy.service.split(',\n') }}"
+       service_list_type: "{{ rule_policy.service_type }}"
+    when: (rule_policy.service != "") and (rule_policy.service != 'any')
+
+  - name: set service_name if service != 'any'
+    set_fact:
+      service_name: "{{ service_name + [service_list_type +'-'+ item] }}"
+      cacheable: yes
+    loop: "{{ service_list }}"
+    vars:
+      service_name: []
+    when: ( service_list_type +'-'+ item not in service_name) and (rule_policy.service != "") and (rule_policy.service != 'any') and (item != "")
+
+  - name: set service_name if service == 'any'
+    set_fact:
+      service_name: 'any'
+    when: (rule_policy.service == 'any')
+
+  - name: set application_list
+    set_fact:
+       application_list: "{{ rule_policy.application.split(',\n') }}"
+    when: (rule_policy.application != "")
+
+  - name: set application_list
+    set_fact:
+       application_list: "any"
+    when: (rule_policy.application == "")
+
+  - name: Create Policy and add Address or Address Group into policy
+    panos_security_rule:
+      provider: "{{ provider }}"
+      device_group: "shared"
+      rule_name: "{{ rule_name }}"
+      source_zone: "any"
+      source_ip: "{{ source_name  }}"
+      destination_zone: "any"
+      destination_ip: "{{ destination_name }}"
+      action: "allow"
+      service: "{{ service_name }}"
+      application: "{{ application_list }}"
+    when: (rule is failed) or (rule_policy.service != "")
+
+  - name: Clear data in variable
+    set_fact:
+      source_name: []
+      destination_name: []
+      service_name: []
+    when: rule_policy.service == ""
+
+  - name: set application_list to 'any'
+    set_fact:
+      application_list: 'any'
+    when: rule_policy.application == ""
+
+    

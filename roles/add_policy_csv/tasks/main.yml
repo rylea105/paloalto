@@ -1,0 +1,9 @@
+- name: include add_policy
+  include_tasks: add_policy.yml
+  loop: "{{ policy.list }}"
+  loop_control:
+    loop_var: rule_policy
+
+
+
+  

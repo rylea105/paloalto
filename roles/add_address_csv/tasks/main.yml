@@ -1,0 +1,17 @@
+  - name: Create address object source_ip
+    panos_address_object:
+      provider: "{{ provider }}"
+      name: "{{ item.source_name }}"
+      value: "{{ item.source_ip | ipv4 }}"
+    loop: "{{ policy.list }}"
+    when: item.source_ip != ""
+    ignore_errors: yes
+
+  - name: Create address object destination_ip
+    panos_address_object:
+      provider: "{{ provider }}"
+      name: "{{ item.destination_name }}"
+      value: "{{ item.destination_ip | ipv4 }}"
+    loop: "{{ policy.list }}"
+    when: item.destination_ip != "" 
+    ignore_errors: yes
