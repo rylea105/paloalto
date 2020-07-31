@@ -12,15 +12,15 @@
     src: ha_report.csv.j2
     dest: /tmp/ha_report.csv
 
-- name: Sent file to email
-  mail:
-    host: smtp.office365.com
-    port: 587
-    username: dew_95531@windowslive.com
-    password: kittitat@95531
-    from: dew_95531@windowslive.com
-    secure: starttls
-    to: kittitat.p@g-able.com
-    subject: HA Status
-    attach:
-      - /tmp/ha_report.csv
+# - name: Sent file to email
+#   mail:
+#     host: smtp.office365.com
+#     port: 587
+#     username: dew_95531@windowslive.com
+#     password: kittitat@95531
+#     from: dew_95531@windowslive.com
+#     secure: starttls
+#     to: kittitat.p@g-able.com
+#     subject: HA Status
+#     attach:
+#       - /tmp/ha_report.csv

@@ -5,6 +5,8 @@
     cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
     cmd_is_xml: yes
   register: failover
+  ignore_errors: yes
 
 - debug:
     var: failover
+  ignore_errors: yes
