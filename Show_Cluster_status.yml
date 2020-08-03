@@ -5,44 +5,43 @@
   collections:
     - paloaltonetworks.panos
 
-  roles:
-    - role: PaloAltoNetworks.paloaltonetworks 
-    - api_key
-    - high_availability_state
-    - fail_over
+  # roles:
+  #   - api_key
+  #   - high_availability_state
+  #   - fail_over
 
-  # tasks:
-  #   - name: get api key
-  #     panos_api_key: 
-  #       provider: 
-  #           ip_address: "{{ ip_address }}"
-  #           username: "{{ username }}"
-  #           password: "{{ password }}"
-  #     register: auth
+  tasks:
+    - name: get api key
+      panos_api_key: 
+        provider: 
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
 
-  #   - name: high-availability state
-  #     panos_op:
-  #       provider: 
-  #         api_key: "{{ auth.api_key }}"
-  #       cmd: "show high-availability state"
-  #     register: ha_report
+    - name: high-availability state
+      panos_op:
+        provider: 
+          api_key: "{{ auth.api_key }}"
+        cmd: "show high-availability state"
+      register: ha_report
 
-  #   - set_fact:
-  #       ha: "{{ ha_report.stdout }}"
+    - set_fact:
+        ha: "{{ ha_report.stdout }}"
 
-  #   - name: Template a file to /root/paloalto/ha_report.csv
-  #     template:
-  #       src: roles/high_availability_state/templates/ha_report.csv.j2
-  #       dest: /tmp/ha_report.csv
+    - name: Template a file to /root/paloalto/ha_report.csv
+      template:
+        src: roles/high_availability_state/templates/ha_report.csv.j2
+        dest: /tmp/ha_report.csv
 
-  #   - name: Fail-over
-  #     panos_op:
-  #       provider:
-  #         api_key: "{{ auth.api_key }}"
-  #       cmd: request high-availability state suspend
-  #     register: failover
-  #     ignore_errors: yes
+    - name: Fail-over
+      panos_op:
+        provider:
+          api_key: "{{ auth.api_key }}"
+        cmd: request high-availability state suspend
+      register: failover
+      ignore_errors: yes
 
-  #   - debug:
-  #       var: failover
-  #     ignore_errors: yes
+    - debug:
+        var: failover
+      ignore_errors: yes
