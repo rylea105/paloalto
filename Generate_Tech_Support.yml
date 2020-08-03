@@ -2,19 +2,24 @@
 - name: Generate Tech Support
   hosts: localhost
   gather_facts: no
-  vars_prompt:
-  - name: ip_address
-    prompt: Enter Palo Alto IP
-    private: no
-  - name: username
-    prompt: Enter Palo Alto Username
-    private: no
-  - name: password
-    prompt: Enter Palo Alto Password
-    private: no
   collections:
   - paloaltonetworks.panos
-  roles:
-    - PaloAltoNetworks.paloaltonetworks
-    - api_key
-    - generate_tech_support
+  # roles:
+  #   - api_key
+  #   - generate_tech_support
+
+  tasks:
+    - name: get api key
+      panos_api_key: 
+        provider: 
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
+
+    - name: Generate Tech Support File
+      panos_op:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        cmd: "request tech-support dump"
