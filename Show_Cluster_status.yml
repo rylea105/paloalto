@@ -18,6 +18,9 @@
             username: "{{ username }}"
             password: "{{ password }}"
       register: auth
+    
+    - debug:
+        var: auth
 
     - name: high-availability state
       panos_op:
