@@ -2,11 +2,8 @@
 - name: Fail-over
   panos_op:
     provider:
-      ip_address: "{{ ip_address }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
-    cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
-    cmd_is_xml: yes
+      api_key: "{{ auth.api_key }}"
+    cmd: request high-availability state suspend
   register: failover
   ignore_errors: yes
 
