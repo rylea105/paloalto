@@ -25,7 +25,7 @@
     - name: high-availability state
       panos_op:
         provider: 
-          api_key: "{{ api_key }}"
+          api_key: "{{ auth.api_key }}"
         cmd: "show high-availability state"
       register: ha_report
 
@@ -40,7 +40,7 @@
     - name: Fail-over
       panos_op:
         provider:
-          api_key: "{{ api_key }}"
+          api_key: "{{ auth.api_key }}"
         cmd: request high-availability state suspend
       register: failover
       ignore_errors: yes
