@@ -5,16 +5,48 @@
   collections:
   - paloaltonetworks.panos
 
-  roles:
-    - api_key
+  # roles:
+  #   - api_key
     # - high_availability_state
     # - fail_over
 
-  # tasks:
-  #   - name: get api key
-  #     panos_api_key: 
-  #       provider: 
-  #           ip_address: "{{ ip_address }}"
-  #           username: "{{ username }}"
-  #           password: "{{ password }}"
-  #     register: auth
+  tasks:
+    - name: get api key
+      panos_api_key: 
+        provider: 
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
+
+    - name: high-availability state
+      panos_op:
+        provider: 
+          ip_address: "{{ ip_address }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        cmd: "show high-availability state"
+      register: ha_report
+
+    - set_fact:
+        ha: "{{ ha_report.stdout }}"
+
+    - name: Template a file to /root/paloalto/ha_report.csv
+      template:
+        src: roles/high_availability_state/templates/ha_report.csv.j2
+        dest: /tmp/ha_report.csv
+
+    - name: Fail-over
+      panos_op:
+        provider:
+          ip_address: "{{ ip_address }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
+        cmd_is_xml: yes
+      register: failover
+      ignore_errors: yes
+
+    - debug:
+        var: failover
+      ignore_errors: yes
