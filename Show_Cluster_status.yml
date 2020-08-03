@@ -12,7 +12,7 @@
 
   tasks:
     - name: get api key
-      panos_op: 
+      panos_api_key: 
         provider: 
             ip_address: "{{ ip_address }}"
             username: "{{ username }}"
