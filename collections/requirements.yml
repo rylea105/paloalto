@@ -1,4 +1,4 @@
 ---
   - name: paloaltonetworks.panos
     version: 1.1.0
-    src: https://galaxy.ansible.com
+    # src: https://galaxy.ansible.com
