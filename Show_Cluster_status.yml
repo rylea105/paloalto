@@ -12,7 +12,8 @@
 
   tasks:
     - name: include role
-      include_role: api_key
+      include_role: 
+        name: api_key
     # - name: get api key
     #   panos_api_key: 
     #     provider: 
