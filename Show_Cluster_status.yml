@@ -11,8 +11,8 @@
   #   - fail_over
 
   tasks:
-    - name: include role
-      include_role: 
+    - name: import_role
+      import_role: 
         name: api_key
     # - name: get api key
     #   panos_api_key: 
