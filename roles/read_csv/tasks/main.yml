@@ -1,3 +1,6 @@
+  - name: copy csv to container
+    shell: docker cp /root/policy.csv awx_task:/var/tmp/docker/
+
   - name: Read policy
     read_csv:
       path: /var/tmp/docker/policy.csv

@@ -1,0 +1,14 @@
+  - set_fact:
+       service_list: "{{ rule_service.service.split(',\n') }}"
+       service_list_type: "{{ rule_service.service_type }}"
+    when: (rule_service.service != "")
+
+  - name: Create service object
+    panos_service_object:
+      provider:
+        ip_address: "{{ ip_address }}"
+        api_key: "{{ auth.api_key }}"
+      name: "{{ service_list_type }}-{{ item }}"
+      destination_port: "{{ item }}"
+      protocol: "{{ service_list_type }}"
+    loop: "{{ service_list }}"

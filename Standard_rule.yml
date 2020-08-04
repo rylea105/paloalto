@@ -2,21 +2,64 @@
 - name: Create Statndard Rule
   hosts: localhost
   gather_facts: no
-  vars_prompt:
-  - name: ip_address
-    prompt: Enter Palo Alto IP
-    private: no
-  - name: username
-    prompt: Enter Palo Alto Username
-    private: no
-  - name: password
-    prompt: Enter Palo Alto Password
-    private: no
   collections:
   - paloaltonetworks.panos
-  roles:
-    - PaloAltoNetworks.paloaltonetworks
-    - read_csv
-    - add_address_csv
-    - add_service_csv
-    - add_policy_csv
+  # roles:
+  #   - PaloAltoNetworks.paloaltonetworks
+  #   - read_csv
+  #   - add_address_csv
+  #   - add_service_csv
+  #   - add_policy_csv
+
+  tasks:
+    - name: copy csv to container
+      shell: docker cp /root/policy.csv awx_task:/var/tmp/docker/
+
+    - name: Read policy
+      read_csv:
+        path: /var/tmp/docker/policy.csv
+      register: policy
+      delegate_to: localhost
+
+    - name: get api key
+      panos_api_key: 
+        provider: 
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
+
+    - name: Create address object source_ip
+      panos_address_object:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        name: "{{ item.source_name }}"
+        value: "{{ item.source_ip | ipv4 }}"
+      loop: "{{ policy.list }}"
+      when: item.source_ip != ""
+      ignore_errors: yes
+
+    - name: Create address object destination_ip
+      panos_address_object:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        name: "{{ item.destination_name }}"
+        value: "{{ item.destination_ip | ipv4 }}"
+      loop: "{{ policy.list }}"
+      when: item.destination_ip != "" 
+      ignore_errors: yes
+
+    - name: include create_service
+      include_tasks: ./create_service.yml
+      loop: "{{ policy.list }}"
+      loop_control:
+        loop_var: rule_service
+      when: rule_service.service != "" and rule_service.service != 'any'
+
+    - name: include add_policy
+      include_tasks: ./add_policy.yml
+      loop: "{{ policy.list }}"
+      loop_control:
+        loop_var: rule_policy
