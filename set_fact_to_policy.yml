@@ -22,17 +22,17 @@
   # - debug:
   #     var: destination_result
 
-  - name: verify source  address
-    set_fact:
-      test1: "{{ source_result.objects.0.name }}"
-    ignore_errors: true
-    register: source_result_check
+  # - name: verify source  address
+  #   set_fact:
+  #     test1: "{{ source_result.objects.0.name }}"
+  #   ignore_errors: true
+  #   register: source_result_check
 
-  - name: verify destination address
-    set_fact:
-      test2: "{{ destination_result.objects.0.name }}"
-    ignore_errors: true
-    register: destination_result_check
+  # - name: verify destination address
+  #   set_fact:
+  #     test2: "{{ destination_result.objects.0.name }}"
+  #   ignore_errors: true
+  #   register: destination_result_check
 
   - name: set source name
     set_fact:
@@ -40,7 +40,7 @@
     # loop: "{{ policy.list }}"
     vars:
       source_name: []
-    when: (policy_list.source_ip != "") and ( rule_name == policy_list.policy_name) and (rule is failed)  and ( source_result_check is not failed)
+    when: (policy_list.source_ip != "") and ( rule_name == policy_list.policy_name) and (rule is failed)  and ( source_result.objects != [] )
 
   - name: set destination ip
     set_fact:
@@ -48,4 +48,4 @@
     # loop: "{{ policy.list }}"
     vars:
       destination_name: []
-    when: (policy_list.destination_ip != "") and (rule_name == policy_list.policy_name) and (rule is failed)  and ( destination_result_check is not failed)
+    when: (policy_list.destination_ip != "") and (rule_name == policy_list.policy_name) and (rule is failed)  and ( destination_result.objects != [] )
