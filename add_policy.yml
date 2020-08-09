@@ -69,6 +69,9 @@
        application_list: "any"
     when: (rule_policy.application == "")
 
+  - debug:
+      msg: "{{ source_name }}"
+
   - name: Create Policy and add Address or Address Group into policy
     panos_security_rule:
       provider:
