@@ -32,12 +32,13 @@
     loop: "{{ policy.list }}"
     loop_control:
       loop_var: policy_list
+    when: rule_name != ""
 
-  - debug:
-      var: source_name
+  # - debug:
+  #     var: source_name
 
-  - debug:
-      var: destination_name
+  # - debug:
+  #     var: destination_name
   
   - name: set service_list and service_list_type if service != 'any'
     set_fact:
