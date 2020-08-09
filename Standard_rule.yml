@@ -63,3 +63,9 @@
       loop: "{{ policy.list }}"
       loop_control:
         loop_var: rule_policy
+
+    - name: Commit
+      panos_commit:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
