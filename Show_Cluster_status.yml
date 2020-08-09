@@ -5,19 +5,19 @@
   collections:
     - paloaltonetworks.panos
 
-  # roles:
-  #   - api_key
+  roles:
+    - api_key
   #   - high_availability_state
   #   - fail_over
 
   tasks:
-    - name: get api key
-      panos_api_key: 
-        provider: 
-            ip_address: "{{ ip_address }}"
-            username: "{{ username }}"
-            password: "{{ password }}"
-      register: auth
+    # - name: get api key
+    #   panos_api_key: 
+    #     provider: 
+    #         ip_address: "{{ ip_address }}"
+    #         username: "{{ username }}"
+    #         password: "{{ password }}"
+    #   register: auth
 
     - name: high-availability state
       panos_op:
