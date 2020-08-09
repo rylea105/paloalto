@@ -19,7 +19,6 @@
       read_csv:
         path: /root/policy.csv
       register: policy
-      delegate_to: localhost
 
     - name: get api key
       panos_api_key: 
