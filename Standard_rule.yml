@@ -1,6 +1,6 @@
 ---
 - name: Create Statndard Rule
-  hosts: localhost
+  hosts: awx
   gather_facts: no
   collections:
   - paloaltonetworks.panos
