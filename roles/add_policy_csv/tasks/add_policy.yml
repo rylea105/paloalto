@@ -11,7 +11,7 @@
 
   - name: set source name
     set_fact:
-      source_name_var: "{{ source_name + [item.source_name] }}"
+      source_name: "{{ source_name + [item.source_name] }}"
     loop: "{{ policy.list }}"
     vars:
       source_name: []
@@ -19,7 +19,7 @@
 
   - name: set destination ip
     set_fact:
-      destination_name_var: "{{ destination_name + [item.destination_name] }}"
+      destination_name: "{{ destination_name + [item.destination_name] }}"
     loop: "{{ policy.list }}"
     vars:
       destination_name: []
