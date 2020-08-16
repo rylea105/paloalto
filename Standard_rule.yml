@@ -60,11 +60,11 @@
         loop_var: rule_service
       when: rule_service.service != "" and rule_service.service != 'any'
 
-    # - name: include add_policy
-    #   include_tasks: ./add_policy.yml
-    #   loop: "{{ policy.list }}"
-    #   loop_control:
-    #     loop_var: rule_policy
+    - name: include add_policy
+      include_tasks: ./add_policy.yml
+      loop: "{{ policy.list }}"
+      loop_control:
+        loop_var: rule_policy
 
     - name: Commit
       panos_commit:
