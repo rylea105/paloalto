@@ -20,45 +20,45 @@
         path: /root/policy.csv
       register: policy
 
-    - debug:
-        var: policy
+    # - debug:
+    #     var: policy
 
-    # - name: get api key
-    #   panos_api_key: 
-    #     provider: 
-    #         ip_address: "{{ ip_address }}"
-    #         username: "{{ username }}"
-    #         password: "{{ password }}"
-    #   register: auth
+    - name: get api key
+      panos_api_key: 
+        provider: 
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
 
-    # - name: Create address object source_ip
-    #   panos_address_object:
-    #     provider:
-    #       ip_address: "{{ ip_address }}"
-    #       api_key: "{{ auth.api_key }}"
-    #     name: "{{ item.source_name }}"
-    #     value: "{{ item.source_ip | ipv4 }}"
-    #   loop: "{{ policy.list }}"
-    #   when: item.source_ip != ""
-    #   ignore_errors: yes
+    - name: Create address object source_ip
+      panos_address_object:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        name: "{{ item.source_name }}"
+        value: "{{ item.source_ip | ipv4 }}"
+      loop: "{{ policy.list }}"
+      when: item.source_ip != ""
+      ignore_errors: yes
 
-    # - name: Create address object destination_ip
-    #   panos_address_object:
-    #     provider:
-    #       ip_address: "{{ ip_address }}"
-    #       api_key: "{{ auth.api_key }}"
-    #     name: "{{ item.destination_name }}"
-    #     value: "{{ item.destination_ip | ipv4 }}"
-    #   loop: "{{ policy.list }}"
-    #   when: item.destination_ip != "" 
-    #   ignore_errors: yes
+    - name: Create address object destination_ip
+      panos_address_object:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        name: "{{ item.destination_name }}"
+        value: "{{ item.destination_ip | ipv4 }}"
+      loop: "{{ policy.list }}"
+      when: item.destination_ip != "" 
+      ignore_errors: yes
 
-    # - name: include create_service
-    #   include_tasks: ./create_service.yml
-    #   loop: "{{ policy.list }}"
-    #   loop_control:
-    #     loop_var: rule_service
-    #   when: rule_service.service != "" and rule_service.service != 'any'
+    - name: include create_service
+      include_tasks: ./create_service.yml
+      loop: "{{ policy.list }}"
+      loop_control:
+        loop_var: rule_service
+      when: rule_service.service != "" and rule_service.service != 'any'
 
     # - name: include add_policy
     #   include_tasks: ./add_policy.yml
@@ -66,8 +66,8 @@
     #   loop_control:
     #     loop_var: rule_policy
 
-    # - name: Commit
-    #   panos_commit:
-    #     provider:
-    #       ip_address: "{{ ip_address }}"
-    #       api_key: "{{ auth.api_key }}"
+    - name: Commit
+      panos_commit:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
