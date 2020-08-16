@@ -103,12 +103,12 @@
       source_name: []
       destination_name: []
       service_name: []
-    when: rule_policy.service == ""
+    when: rule_policy.service == "" 
 
   - name: set application_list to 'any'
     set_fact:
       application_list: 'any'
-    when: rule_policy.application == ""
+    when: rule_policy.application == "" and rule is failed
 
   - debug:
       var: source_name
