@@ -86,6 +86,18 @@
       application: "{{ application_list }}"
     when: (rule is failed) or (rule_policy.service != "")
 
+  - debug:
+      var: source_name
+
+  - debug:
+      var: destination_name
+  
+  - debug:
+      var: service_name
+
+  - debug:
+      var: application_list
+        
   - name: Clear data in variable
     set_fact:
       source_name: []
@@ -97,5 +109,17 @@
     set_fact:
       application_list: 'any'
     when: rule_policy.application == ""
+
+  - debug:
+      var: source_name
+
+  - debug:
+      var: destination_name
+  
+  - debug:
+      var: service_name
+
+  - debug:
+      var: application_list
 
     
