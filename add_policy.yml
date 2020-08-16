@@ -32,7 +32,7 @@
     loop: "{{ policy.list }}"
     loop_control:
       loop_var: policy_list
-    when: rule_name != ""
+    when: rule_name != "" and rule is failed
 
   # - debug:
   #     var: source_name
