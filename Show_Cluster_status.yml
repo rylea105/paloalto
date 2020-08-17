@@ -27,13 +27,13 @@
         cmd: "show high-availability state"
       register: ha_report
 
-    - set_fact:
-        ha: "{{ ha_report.stdout }}"
+    - debug:
+        var: "{{ ha_report.stdout }}"
 
-    - name: Template a file to /root/paloalto/ha_report.csv
-      template:
-        src: roles/high_availability_state/templates/ha_report.csv.j2
-        dest: /tmp/ha_report.csv
+    # - name: Template a file to /root/paloalto/ha_report.csv
+    #   template:
+    #     src: roles/high_availability_state/templates/ha_report.csv.j2
+    #     dest: /tmp/ha_report.csv
 
     - name: Fail-over
       panos_op:
