@@ -30,11 +30,15 @@
 
     - name: Restart System
       panos_restart:
-        provider: "{{ provider }}"
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
 
     - name: wait for reboot
       panos_check:
-        provider: "{{ provider }}"
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
         initial_delay: 60
         interval: 0
         timeout: 86400
