@@ -25,7 +25,7 @@
 
     # Pause for 2 minutes to create tech-support
     - pause:
-      minutes: "{{ pause_time | default( 2 ) }}"
+        minutes: "{{ pause_time | default( 2 ) }}"
 
     - name: Check on the status of the job
       uri:
