@@ -22,4 +22,5 @@
         provider:
           ip_address: "{{ ip_address }}"
           api_key: "{{ auth.api_key }}"
-        cmd: "request tech-support dump"
+        cmd: <request><tech-support><dump></dump></tech-support></request>
+        cmd_is_xml: yes
