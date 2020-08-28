@@ -23,6 +23,9 @@
         return_content: yes
         validate_certs: no
       register: job_id
+    
+    - debug:
+        var: job_id
 
     # Pause for 2 minutes to create tech-support
     - pause:
@@ -34,6 +37,9 @@
         return_content: yes
         validate_certs: no
       register: job_status
+
+    - debug:
+        var: job_status
 
     - set_fact:
         date_not_fillter: "{{ job_status.tenq.split().0 }}"
