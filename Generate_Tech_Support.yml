@@ -53,9 +53,11 @@
         file_name: "{{ date }}_{{ time }}_techsupport.tgz"
 
     - name: Retrieve the tech support data.
-      shell: curl "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }} -o -s {{ file_path }}/{{ file_name }}"
+      shell: "curl https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }} -o -s {{ file_path }}/{{ file_name }}"
       delegate_to: localhost
-      when: job_status.result is 'ok'
+      when: >
+        'OK' in job_status.msg and 
+        job_status.status == '200'
 
     # - name: Generate Tech Support File
     #   panos_op:
