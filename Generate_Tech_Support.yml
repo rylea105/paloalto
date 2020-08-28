@@ -24,8 +24,11 @@
         validate_certs: no
       register: job_id
     
-    - debug:
-        msg: job_id.content.result.job
+    - set_fact:
+        output: "{{  job_id.content.split().7}}"
+ 
+    - set_fact:
+        id: "{{ output.split('<').0 }}"
 
     # Pause for 2 minutes to create tech-support
     - pause:
@@ -33,13 +36,10 @@
 
     - name: Check on the status of the job
       uri:
-        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.content_length }}"
+        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ id }}"
         return_content: yes
         validate_certs: no
       register: job_status
-
-    - debug:
-        var: job_status
 
     - set_fact:
         date_not_fillter: "{{ job_status.tenq.split().0 }}"
