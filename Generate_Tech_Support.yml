@@ -21,6 +21,7 @@
       uri:
         url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support"
         return_content: yes
+        validate_certs: no
       register: job_id
 
     # Pause for 2 minutes to create tech-support
@@ -31,6 +32,7 @@
       uri:
         url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }}"
         return_content: yes
+        validate_certs: no
       register: job_status
 
     - set_fact:
