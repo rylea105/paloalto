@@ -33,7 +33,7 @@
 
     - name: Check on the status of the job
       uri:
-        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }}"
+        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.content_length }}"
         return_content: yes
         validate_certs: no
       register: job_status
