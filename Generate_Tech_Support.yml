@@ -17,10 +17,42 @@
             password: "{{ password }}"
       register: auth
 
-    - name: Generate Tech Support File
-      panos_op:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        cmd: <request><tech-support><dump></dump></tech-support></request>
-        cmd_is_xml: yes
+    - name: Create a job to retrieve technical support data
+      uri:
+        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support"
+        return_content: yes
+      register: job_id
+
+    # Pause for 2 minutes to create tech-support
+    - pause:
+      minutes: "{{ pause_time | default( 2 ) }}"
+
+    - name: Check on the status of the job
+      uri:
+        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }}"
+        return_content: yes
+      register: job_status
+
+    - set_fact:
+        date_not_fillter: "{{ job_status.tenq.split().0 }}"
+        time_not_fillter: "{{ job_status.tenq.split().1 }}"
+
+    - set_fact:
+        date: "{{ date_not_fillter.split('/') | join('') }}"
+        time: "{{ time_not_fillter.split(':') | join('') }}"
+
+    - set_fact:
+        file_name: "{{ date }}_{{ time }}_techsupport.tgz"
+
+    - name: Retrieve the tech support data.
+      shell: curl "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ job_id.job }} -o -s {{ file__path }}/{{ file_name }}"
+      delegate_to: localhost
+      when: job_status.result is 'ok'
+
+    # - name: Generate Tech Support File
+    #   panos_op:
+    #     provider:
+    #       ip_address: "{{ ip_address }}"
+    #       api_key: "{{ auth.api_key }}"
+    #     cmd: <request><tech-support><dump></dump></tech-support></request>
+    #     cmd_is_xml: yes
