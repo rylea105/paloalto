@@ -25,7 +25,7 @@
       register: job_id
     
     - debug:
-        var: job_id
+        var: job_id.content.result.job
 
     # Pause for 2 minutes to create tech-support
     - pause:
