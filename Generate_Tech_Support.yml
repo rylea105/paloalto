@@ -41,24 +41,33 @@
         validate_certs: no
       register: job_status
 
-    - set_fact:
+    - name: set status_msg
+      set_fact:
         status_msg: "{{ job_status.msg.split().0 }}"
 
-    - set_fact:
+    - debug:
+        var: status_msg
+
+    - name: set date_time1
+      set_fact:
         date_time1: "{{ job_status.content.split('<tenq>').1 }}"
  
-    - set_fact:
+    - name: set date_time2
+      set_fact:
         date_time2: "{{ date_time1.split('</tenq>').0 }}"
 
-    - set_fact:
+    - name: set date_time_not_fillter
+      set_fact:
         date_not_fillter: "{{ date_time2.split().0 }}"
         time_not_fillter: "{{ date_time2.split().1 }}"
 
-    - set_fact:
+    - name: set date_time
+      set_fact:
         date: "{{ date_not_fillter.split('/') | join('') }}"
         time: "{{ time_not_fillter.split(':') | join('') }}"
 
-    - set_fact:
+    - name: set file_name
+      set_fact:
         file_name: "{{ date }}_{{ time }}_techsupport.tgz"
 
     - name: Retrieve the tech support data.
