@@ -73,7 +73,7 @@
     - name: Retrieve the tech support data.
       shell: "curl https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ id }} -o -s {{ file_path }}/{{ file_name }}"
       delegate_to: localhost
-      when: status_msg == 'ok'
+      when: status_msg == 'OK'
 
     # - name: Generate Tech Support File
     #   panos_op:
