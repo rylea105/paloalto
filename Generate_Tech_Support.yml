@@ -75,10 +75,8 @@
       delegate_to: localhost
       when: status_msg == 'OK'
 
-    # - name: Generate Tech Support File
-    #   panos_op:
-    #     provider:
-    #       ip_address: "{{ ip_address }}"
-    #       api_key: "{{ auth.api_key }}"
-    #     cmd: <request><tech-support><dump></dump></tech-support></request>
-    #     cmd_is_xml: yes
+    - name: Copy a new "sudoers" file into place, after passing validation with visudo
+      copy:
+        src: "{{ file_path }}/{{ file_name }}"
+        dest: "{{ file_path }}/{{ file_name }}"
+      delegate_to: ftp_server
