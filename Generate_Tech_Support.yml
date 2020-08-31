@@ -71,7 +71,7 @@
         file_name: "{{ date }}_{{ time }}_techsupport.tgz"
 
     - name: Retrieve the tech support data.
-      shell: "curl --insecure https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }} --output {{ file_path }}/{{ file_name }}"
+      shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/{{ file_name }}"
       delegate_to: localhost
       when: status_msg == 'OK'
 
