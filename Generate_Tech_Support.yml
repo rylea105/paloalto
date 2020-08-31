@@ -62,7 +62,6 @@
       shell: "curl https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ id }} -o -s {{ file_path }}/{{ file_name }}"
       delegate_to: localhost
       when: >
-        'OK' in job_status.msg and 
         job_status.status == '200'
 
     # - name: Generate Tech Support File
