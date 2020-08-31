@@ -42,8 +42,14 @@
       register: job_status
 
     - set_fact:
-        date_not_fillter: "{{ job_status.tenq.split().0 }}"
-        time_not_fillter: "{{ job_status.tenq.split().1 }}"
+        date_time1: "{{ job_status.content.split('<tenq>').1 }}"
+ 
+    - set_fact:
+        date_time2: "{{ date_time1.split('</tenq>').0 }}"
+
+    - set_fact:
+        date_not_fillter: "{{ date_time2.split().0 }}"
+        time_not_fillter: "{{ date_time2.split().1 }}"
 
     - set_fact:
         date: "{{ date_not_fillter.split('/') | join('') }}"
