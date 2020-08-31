@@ -42,6 +42,9 @@
       register: job_status
 
     - set_fact:
+        status_msg: "{{ job_status.msg.split().0 }}"
+
+    - set_fact:
         date_time1: "{{ job_status.content.split('<tenq>').1 }}"
  
     - set_fact:
@@ -61,8 +64,7 @@
     - name: Retrieve the tech support data.
       shell: "curl https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=status&job-id={{ id }} -o -s {{ file_path }}/{{ file_name }}"
       delegate_to: localhost
-      when: >
-        job_status.status == '200'
+      when: status_msg == 'ok'
 
     # - name: Generate Tech Support File
     #   panos_op:
