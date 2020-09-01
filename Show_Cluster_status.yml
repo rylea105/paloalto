@@ -57,5 +57,5 @@
       ignore_errors: yes
 
     - debug:
-        msg: failover
+        msg: "{{ failover }}"
       ignore_errors: yes
