@@ -4,9 +4,6 @@
   gather_facts: no
   collections:
   - paloaltonetworks.panos
-  # roles:
-  #   - api_key
-  #   - generate_tech_support
 
   tasks:
     - name: get api key

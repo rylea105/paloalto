@@ -2,22 +2,8 @@
 - name: Restart Palo Alto System
   hosts: localhost
   gather_facts: no
-  # vars_prompt:
-  # - name: ip_address
-  #   prompt: Enter Palo Alto IP
-  #   private: no
-  # - name: username
-  #   prompt: Enter Palo Alto Username
-  #   private: no
-  # - name: password
-  #   prompt: Enter Palo Alto Password
-  #   private: no
   collections:
   - paloaltonetworks.panos
-  # roles:
-  #   - PaloAltoNetworks.paloaltonetworks
-  #   - api_key
-  #   - system_restart
 
   tasks:
     - name: get api key
@@ -27,6 +13,17 @@
             username: "{{ username }}"
             password: "{{ password }}"
       register: auth
+
+    - name: Get facts
+      panos_facts:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        gather_subset: ['system']
+      register: uptime_before_restart
+
+    - debug:
+        msg: "{{ uptime_before_restart }}"
 
     - name: Restart System
       panos_restart:
@@ -46,3 +43,14 @@
 
     - debug:
         var: check
+
+    - name: Get facts
+      panos_facts:
+        provider:
+          ip_address: "{{ ip_address }}"
+          api_key: "{{ auth.api_key }}"
+        gather_subset: ['system']
+      register: uptime_after_restart
+
+    - debug:
+        msg: "{{ uptime_after_restart }}"
