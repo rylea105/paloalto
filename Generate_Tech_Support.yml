@@ -75,8 +75,8 @@
       delegate_to: localhost
       when: status_msg == 'OK'
 
-    - name: Copy a new "sudoers" file into place, after passing validation with visudo
-      copy:
-        src: "{{ file_path }}/{{ file_name }}"
-        dest: "{{ file_path }}/{{ file_name }}"
-      delegate_to: ftp_server
+    # - name: Copy a new "sudoers" file into place, after passing validation with visudo
+    #   copy:
+    #     src: "{{ file_path }}/{{ file_name }}"
+    #     dest: "{{ file_path }}/{{ file_name }}"
+    #   delegate_to: ftp_server
