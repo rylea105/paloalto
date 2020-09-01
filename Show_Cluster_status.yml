@@ -51,8 +51,7 @@
         provider:
           ip_address: "{{ ip_address }}"
           api_key: "{{ auth.api_key }}"
-        cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
-        cmd_is_xml: yes
+        cmd: request high-availability state suspend
       register: failover
       ignore_errors: yes
 
