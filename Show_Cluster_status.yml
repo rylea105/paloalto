@@ -36,10 +36,10 @@
       register: ha1
 
     - debug:
-        var: "{{ ha_report.stdout }}"
+        msg: "{{ ha_report.stdout }}"
 
     - debug:
-        var: "{{ ha1 }}"   
+        msg: "{{ ha1 }}"
 
     # - name: Template a file to /root/paloalto/ha_report.csv
     #   template:
@@ -57,5 +57,5 @@
       ignore_errors: yes
 
     - debug:
-        var: failover
+        msg: failover
       ignore_errors: yes
