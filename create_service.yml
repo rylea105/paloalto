@@ -11,4 +11,5 @@
       name: "{{ service_list_type }}-{{ item }}"
       destination_port: "{{ item }}"
       protocol: "{{ service_list_type }}"
+      commit: no
     loop: "{{ service_list }}"
