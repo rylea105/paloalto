@@ -23,7 +23,7 @@
       register: uptime_before_restart
 
     - debug:
-        msg: "{{ uptime_before_restart }}"
+        msg: "Uptime before restart: {{ uptime_before_restart.ansible_facts.ansible_net_uptime }}"
 
     - name: Restart System
       panos_restart:
@@ -53,4 +53,4 @@
       register: uptime_after_restart
 
     - debug:
-        msg: "{{ uptime_after_restart }}"
+        msg: "Uptime after restart: {{ uptime_after_restart.ansible_facts.ansible_net_uptime }}"
