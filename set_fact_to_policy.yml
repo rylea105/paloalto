@@ -5,6 +5,7 @@
         api_key: "{{ auth.api_key }}"
       name: "{{ policy_list.source_name }}"
       object_type: 'address'
+      device_group: "{{ device_group | default('shared') }}"
     register: source_result
 
   - name: Retrieve address object
@@ -14,6 +15,7 @@
         api_key: "{{ auth.api_key }}"
       name: "{{ policy_list.destination_name }}"
       object_type: 'address'
+      device_group: "{{ device_group | default('shared') }}"
     register: destination_result
 
   # - debug:

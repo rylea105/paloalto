@@ -8,6 +8,7 @@
         ip_address: "{{ ip_address }}"
         api_key: "{{ auth.api_key }}"
       rule_name: "{{ rule_name }}"
+      device_group: "{{ device_group | default('shared') }}"
     register: rule
     ignore_errors: yes
 
@@ -75,7 +76,7 @@
       provider:
         ip_address: "{{ ip_address }}"
         api_key: "{{ auth.api_key }}"
-      device_group: "shared"
+      device_group: "{{ device_group | default('shared') }}"
       rule_name: "{{ rule_name }}"
       source_zone: "any"
       source_ip: "{{ source_name  }}"
@@ -84,6 +85,7 @@
       action: "allow"
       service: "{{ service_name }}"
       application: "{{ application_list }}"
+      commit: no
     when: (rule is failed) or (rule_policy.service != "")
         
   - name: Clear data in variable
