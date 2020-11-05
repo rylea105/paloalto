@@ -73,8 +73,8 @@
         dest: "{{ file_path }}/{{ file_name }}"
         validate_certs: no
 
-    - name: Copy a tech support data to file server
-      copy:
-        src: "{{ file_path }}/{{ file_name }}"
-        dest: "{{ file_path }}/{{ file_name }}"
-      delegate_to: file_server
+    # - name: Copy a tech support data to file server
+    #   copy:
+    #     src: "{{ file_path }}/{{ file_name }}"
+    #     dest: "{{ file_path }}/{{ file_name }}"
+    #   delegate_to: file_server
