@@ -27,9 +27,9 @@
     - set_fact:
         id: "{{ output.split('<').0 }}"
 
-    # Pause for 2 minutes to create tech-support
-    - pause:
-        minutes: "{{ pause_time | default( 2 ) }}"
+    # # Pause for 2 minutes to create tech-support
+    # - pause:
+    #     minutes: "{{ pause_time | default( 2 ) }}"
 
     - name: Check on the status of the job
       uri:
@@ -37,13 +37,9 @@
         return_content: yes
         validate_certs: no
       register: job_status
-
-    - name: set status_msg
-      set_fact:
-        status_msg: "{{ job_status.msg.split().0 }}"
-
-    - debug:
-        var: status_msg
+      retries: 720
+      delay: 5
+      until: job_status.content.split('</stoppable><result>').1.split('</result>').0 == "OK"
 
     - name: set date_time1
       set_fact:
@@ -67,13 +63,18 @@
       set_fact:
         file_name: "{{ date }}_{{ time }}_techsupport.tgz"
 
-    - name: Retrieve the tech support data.
-      shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/{{ file_name }}"
-      delegate_to: localhost
-      when: status_msg == 'OK'
+    # - name: Retrieve the tech support data.
+    #   shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/{{ file_name }}"
+    #   delegate_to: localhost
 
-    # - name: Copy a new "sudoers" file into place, after passing validation with visudo
-    #   copy:
-    #     src: "{{ file_path }}/{{ file_name }}"
-    #     dest: "{{ file_path }}/{{ file_name }}"
-    #   delegate_to: ftp_server
+    - name: Download foo.conf
+      get_url:
+        url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}"
+        dest: "{{ file_path }}/{{ file_name }}"
+        validate_certs: no
+
+    - name: Copy a tech support data to file server
+      copy:
+        src: "{{ file_path }}/{{ file_name }}"
+        dest: "{{ file_path }}/{{ file_name }}"
+      delegate_to: file_server
