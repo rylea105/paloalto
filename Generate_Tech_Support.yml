@@ -63,14 +63,14 @@
       set_fact:
         file_name: "{{ date }}_{{ time }}_techsupport.tgz"
 
-    # - name: Retrieve the tech support data.
-    #   shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/{{ file_name }}"
-    #   delegate_to: localhost
+    - name: Retrieve the tech support data.
+      shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/1{{ file_name }}"
+      delegate_to: localhost
 
     - name: Download foo.conf
       get_url:
         url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}"
-        dest: "{{ file_path }}/{{ file_name }}"
+        dest: "{{ file_path }}/2{{ file_name }}"
         validate_certs: no
 
     # - name: Copy a tech support data to file server
