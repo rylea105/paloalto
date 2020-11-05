@@ -1,0 +1,24 @@
+---
+- name: Generate Tech Support
+  hosts: localhost
+  gather_facts: no
+  collections:
+  - paloaltonetworks.panos
+
+  tasks:
+    - name: get api key
+      panos_api_key:
+        provider:
+            ip_address: "{{ ip_address }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+      register: auth
+
+    - name: Get facts
+      panos_facts:
+        provider:
+          api_key: auth.api_key
+      register: fact
+
+    - debug:
+        var: fact
