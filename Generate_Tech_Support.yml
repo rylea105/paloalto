@@ -67,7 +67,7 @@
     #   shell: "curl --insecure 'https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}' --output {{ file_path }}/1{{ file_name }}"
     #   delegate_to: localhost
 
-    - name: Download foo.conf
+    - name: Download Tech Support File
       get_url:
         url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}"
         dest: "{{ file_path }}/2{{ file_name }}"
