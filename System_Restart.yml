@@ -41,7 +41,7 @@
 
         - debug:
             msg: Check state is active?
-          failed_when: "'passive' not in local_state and 'HA not enabled' not in local_state"
+          failed_when: "'passive' not in local_state or 'HA not enabled' not in local_state"
 
         - debug:
             msg: "false"
