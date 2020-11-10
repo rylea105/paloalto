@@ -43,6 +43,10 @@
             msg: Check state is active?
           failed_when: "'passive' not in local_state and 'HA not enabled' not in local_state"
 
+        - debug:
+            msg: "false"
+          failed_when: true
+
         - name: Get facts
           panos_facts:
             provider:
