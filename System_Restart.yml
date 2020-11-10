@@ -35,7 +35,7 @@
 
         - debug:
             msg: Check state is active?
-          failed_when: "'active' in local_state"
+          failed_when: "'passive' not in local_state"
 
         - name: Get facts
           panos_facts:
