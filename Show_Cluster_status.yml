@@ -36,12 +36,7 @@
     - debug:
         msg: 
          - "IP Local : {{ local_ip }} , State: {{ local_state }}"
-         - "IP Peer  : {{ peer_ip }}  , State: {{ peer_state }}"
-
-    # - name: Template a file to /root/paloalto/ha_report.csv
-    #   template:
-    #     src: roles/high_availability_state/templates/ha_report.csv.j2
-    #     dest: /tmp/ha_report.csv
+         - "IP Peer  : {{ peer_ip }} , State: {{ peer_state }}"
 
     # - name: Fail-over suspend
     #   panos_op:
@@ -87,4 +82,4 @@
     - debug:
         msg: 
          - "IP Local : {{ local_ip }} , State: {{ local_state }}"
-         - "IP Peer  : {{ peer_ip }}  , State: {{ peer_state }}"
+         - "IP Peer  : {{ peer_ip }} , State: {{ peer_state }}"
