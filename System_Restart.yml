@@ -27,6 +27,7 @@
 
         - set_fact:
             local_state: before_set_state
+            local_state_alone: before_set_state
 
         - set_fact:
             local_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
@@ -44,12 +45,14 @@
           when: local_state_fact is succeeded
 
         - debug:
-            msg: Check state is active?
-          failed_when: "'active' in local_state or local_state_alone != 'HA not enabled'"
+            var: local_state_alone
 
         - debug:
-            msg: "false"
-          failed_when: true
+            var: local_state
+
+        - debug:
+            msg: Check state is active?
+          failed_when: "'active' in local_state or local_state_alone != 'HA not enabled'"
 
         - name: Get facts
           panos_facts:
