@@ -26,10 +26,11 @@
           register: ha_report
 
         - set_fact:
-            local_state: 'HA not enabled'
+            local_state_alone: 'HA not enabled'
 
         - set_fact:
             local_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
+            local_state_alone: 'Ha enabled'
           register: local_state_fact
           ignore_errors: yes
 
@@ -41,7 +42,7 @@
 
         - debug:
             msg: Check state is active?
-          failed_when: "'passive' not in local_state or 'HA not enabled' not in local_state"
+          failed_when: "( 'active' in local_state ) or ( local_state_alone == 'HA not enabled' )"
 
         - debug:
             msg: "false"
@@ -90,3 +91,6 @@
       rescue:
         - debug:
             msg: "HA Status at {{ ip_address }} is Active. Please failover"
+          when: 
+          failed_when: true
+
