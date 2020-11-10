@@ -27,9 +27,12 @@
         cmd: "show high-availability state"
       register: ha_report
 
+    - set_fact:
+        local_ip: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['mgmt-ip'] }}"
+        local_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
+
     - debug:
-        msg: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info'] }}"
-        #msg: "{{ ha_report.stdout.response.result.group.local-info.mgmt-ip }} : {{ ha_report.stdout.response.result.group.local-info.state }}"
+        msg: "IP: {{ local_ip }}, State: {{ local_state }}"
 
     # - name: Template a file to /root/paloalto/ha_report.csv
     #   template:
