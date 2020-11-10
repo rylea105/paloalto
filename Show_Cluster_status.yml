@@ -18,6 +18,9 @@
             username: "{{ username }}"
             password: "{{ password }}"
       register: auth
+    
+    - set_fact:
+        local_state: "HA not enabled"
 
     - name: Check HA status is passive?
       block:
@@ -34,11 +37,13 @@
             local_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
             peer_ip: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['peer-info']['mgmt-ip'] }}"
             peer_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['peer-info']['state'] }}"
+          ignore_errors: yes
 
         - debug:
             msg: 
             - "IP Local : {{ local_ip }} , State: {{ local_state }}"
             - "IP Peer  : {{ peer_ip }} , State: {{ peer_state }}"
+          ignore_errors: yes
 
         - debug:
             msg: HA Status is Passive
@@ -90,8 +95,15 @@
             - "IP Local : {{ local_ip }} , State: {{ local_state }}"
             - "IP Peer  : {{ peer_ip }} , State: {{ peer_state }}"
       rescue:
-        - name: Debug message
+        - name: Debug Message
           debug:
             msg: "Local State is Passive"
+          when: "'passive' in local_state"
+          failed_when: true
+
+        - name: Debug Message
+          debug:
+            msg: "HA not enabled"
+          when: "'HA not enabled' in local_state"
           failed_when: true
       
