@@ -34,7 +34,7 @@
         peer_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
 
     - debug:
-        var: ha_report.stdout_lines
+        var: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group'] }}"
 
     - debug:
         msg: "IP: {{ local_ip }}, State: {{ local_state }}"
