@@ -35,8 +35,8 @@
 
     - debug:
         msg: 
-         - "IP Local: {{ local_ip }}, State: {{ local_state }}"
-         - "IP Peer: {{ peer_ip }}, State: {{ peer_state }}"
+         - "IP Local : {{ local_ip }} , State: {{ local_state }}"
+         - "IP Peer  : {{ peer_ip }}  , State: {{ peer_state }}"
 
     # - name: Template a file to /root/paloalto/ha_report.csv
     #   template:
@@ -86,5 +86,5 @@
 
     - debug:
         msg: 
-         - "IP Local: {{ local_ip }}, State: {{ local_state }}"
-         - "IP Peer: {{ peer_ip }}, State: {{ peer_state }}"
+         - "IP Local : {{ local_ip }} , State: {{ local_state }}"
+         - "IP Peer  : {{ peer_ip }}  , State: {{ peer_state }}"
