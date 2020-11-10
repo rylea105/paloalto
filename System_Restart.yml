@@ -14,43 +14,69 @@
             password: "{{ password }}"
       register: auth
 
-    - name: Get facts
-      panos_facts:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        gather_subset: ['system']
-      register: uptime_before_restart
+    - name: Check HA state
+      block:
 
-    - debug:
-        msg: "Uptime before restart: {{ uptime_before_restart.ansible_facts.ansible_net_uptime }}"
+        - name: high-availability state before failover
+          panos_op:
+            provider:
+              ip_address: "{{ ip_address }}"
+              api_key: "{{ auth.api_key }}"
+            cmd: "show high-availability state"
+          register: ha_report
 
-    - name: Restart System
-      panos_restart:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
+        - set_fact:
+            local_state: "{{ ( ha_report.stdout | from_json | json_query('response'))['result']['group']['local-info']['state'] }}"
 
-    - name: wait for reboot
-      panos_check:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        initial_delay: 60
-        interval: 0
-        timeout: 86400
-      register: check
+        - debug:
+            msg: 
+              - "Local IP    : {{ ip_address }}"
+              - "Local State : {{ local_state }}"
 
-    - debug:
-        var: check
+        - debug:
+            msg: Check state is active?
+          failed_when: "'active' in local_state"
 
-    - name: Get facts
-      panos_facts:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        gather_subset: ['system']
-      register: uptime_after_restart
+        - name: Get facts
+          panos_facts:
+            provider:
+              ip_address: "{{ ip_address }}"
+              api_key: "{{ auth.api_key }}"
+            gather_subset: ['system']
+          register: uptime_before_restart
 
-    - debug:
-        msg: "Uptime after restart: {{ uptime_after_restart.ansible_facts.ansible_net_uptime }}"
+        - debug:
+            msg: "Uptime before restart: {{ uptime_before_restart.ansible_facts.ansible_net_uptime }}"
+
+        - name: Restart System
+          panos_restart:
+            provider:
+              ip_address: "{{ ip_address }}"
+              api_key: "{{ auth.api_key }}"
+
+        - name: wait for reboot
+          panos_check:
+            provider:
+              ip_address: "{{ ip_address }}"
+              api_key: "{{ auth.api_key }}"
+            initial_delay: 60
+            interval: 0
+            timeout: 86400
+          register: check
+
+        - debug:
+            var: check
+
+        - name: Get facts
+          panos_facts:
+            provider:
+              ip_address: "{{ ip_address }}"
+              api_key: "{{ auth.api_key }}"
+            gather_subset: ['system']
+          register: uptime_after_restart
+
+        - debug:
+            msg: "Uptime after restart: {{ uptime_after_restart.ansible_facts.ansible_net_uptime }}"
+      rescue:
+        - debug:
+            msg: "HA Status at {{ ip_address }} is Active. Please failover"
