@@ -43,7 +43,7 @@
 
         - debug:
             msg: Check state is active?
-          failed_when: "'active' in v or local_state_alone == 'HA not enabled'"
+          failed_when: "'active' in local_state or local_state_alone == 'HA not enabled'"
 
         - debug:
             msg: "false"
