@@ -28,7 +28,7 @@
       register: ha_report
 
     - debug:
-        msg: "{{ ha_report.stdout }}"
+        msg: "{{ ha_report.stdout.response.result.group.local-info.mgmt-ip }} : {{ ha_report.stdout.response.result.group.local-info.state }}"
 
     # - name: Template a file to /root/paloalto/ha_report.csv
     #   template:
