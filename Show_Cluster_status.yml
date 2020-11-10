@@ -19,7 +19,7 @@
             password: "{{ password }}"
       register: auth
 
-    - name: high-availability state
+    - name: high-availability state before failover
       panos_op:
         provider:
           ip_address: "{{ ip_address }}"
@@ -27,34 +27,48 @@
         cmd: "show high-availability state"
       register: ha_report
 
-    - name: Get facts
-      panos_facts:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        gather_subset: ['ha']
-      register: ha1
-
     - debug:
         msg: "{{ ha_report.stdout }}"
-
-    - debug:
-        msg: "{{ ha1 }}"
 
     # - name: Template a file to /root/paloalto/ha_report.csv
     #   template:
     #     src: roles/high_availability_state/templates/ha_report.csv.j2
     #     dest: /tmp/ha_report.csv
 
-    # - name: Fail-over
+    # - name: Fail-over suspend
     #   panos_op:
     #     provider:
     #       ip_address: "{{ ip_address }}"
     #       api_key: "{{ auth.api_key }}"
-    #     cmd: request high-availability state suspend
+    #     cmd: <request><high-availability><state><suspend></suspend></state></high-availability></request>
+    #     cmd_is_xml: yes
+    #   register: failover
+    #   ignore_errors: yes
+
+    # - name: Fail-over functional
+    #   panos_op:
+    #     provider:
+    #       ip_address: "{{ ip_address }}"
+    #       api_key: "{{ auth.api_key }}"
+    #     cmd: <request><high-availability><state><functional></functional></state></high-availability></request>
+    #     cmd_is_xml: yes
     #   register: failover
     #   ignore_errors: yes
 
     # - debug:
-    #     msg: "{{ failover }}"
+    #       var: failover
     #   ignore_errors: yes
+      
+    # - pause:
+    #     minutes: 1
+
+    # - name: high-availability state after failover
+    #   panos_op:
+    #     provider:
+    #       ip_address: "{{ ip_address }}"
+    #       api_key: "{{ auth.api_key }}"
+    #     cmd: "show high-availability state"
+    #   register: ha_report
+
+    # - debug:
+    #     msg: "{{ ha_report.stdout }}"
