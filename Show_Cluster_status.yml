@@ -47,7 +47,7 @@
 
         - debug:
             msg: HA Status is Passive
-          failed_when: "'passive' in local_state"
+          failed_when: "'passive' in local_state or 'HA not enabled' in local_state"
           
         - name: Fail-over suspend
           panos_op:
