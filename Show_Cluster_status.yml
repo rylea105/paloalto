@@ -46,7 +46,7 @@
           ignore_errors: yes
 
         - debug:
-            msg: HA Status is Passive
+            msg: Check HA State is Active?
           failed_when: "'passive' in local_state or 'HA not enabled' in local_state"
           
         - name: Fail-over suspend
