@@ -1,6 +1,6 @@
 ---
 - name: Create Statndard Rule
-  hosts: awx
+  hosts: localhost
   gather_facts: no
   collections:
   - paloaltonetworks.panos
@@ -76,3 +76,6 @@
           ip_address: "{{ ip_address }}"
           api_key: "{{ auth.api_key }}"
         device_group: "{{ device_group | default('shared') }}"
+        
+    - debug:
+        msg: "Add Standard Rule Successful."

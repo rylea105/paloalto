@@ -94,16 +94,23 @@
             msg: 
             - "IP Local : {{ local_ip }} , State: {{ local_state }}"
             - "IP Peer  : {{ peer_ip }} , State: {{ peer_state }}"
+            - Failover Successful
+            
+        
       rescue:
         - name: Debug Message
           debug:
-            msg: "Local State is Passive"
+            msg: 
+              - "Local State is Passive"
+              - "Failover cannot be performed"
           when: "'passive' in local_state"
           failed_when: true
 
         - name: Debug Message
           debug:
-            msg: "HA not enabled"
+            msg: 
+              - "HA not enabled"
+              - "Failover cannot be performed"
           when: "'HA not enabled' in local_state"
           failed_when: true
       

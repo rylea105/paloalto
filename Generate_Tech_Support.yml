@@ -70,11 +70,11 @@
     - name: Download Tech Support File
       get_url:
         url: "https://{{ ip_address }}/api/?key={{ auth.api_key }}&type=export&category=tech-support&action=get&job-id={{ id }}"
-        dest: "{{ file_path }}/2{{ file_name }}"
+        dest: "{{ file_path }}/{{ file_name }}"
         validate_certs: no
 
-    # - name: Copy a tech support data to file server
-    #   win_copy:
-    #     src: "{{ file_path }}/{{ file_name }}"
-    #     dest: "{{ file_path }}/{{ file_name }}"
-    #   delegate_to: file_server
+    - name: Copy a tech support data to file server
+      win_copy:
+        src: "{{ file_path }}/{{ file_name }}"
+        dest: "{{ jump_file_path }}/{{ file_name }}"
+      delegate_to: jump_host

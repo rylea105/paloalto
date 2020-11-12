@@ -35,7 +35,7 @@
           ignore_errors: yes
 
         - set_fact:
-            local_state_alone: 'HA not enabled'
+            local_state: 'passive'
           when: local_state_fact is not succeeded
 
         - debug:
@@ -50,10 +50,16 @@
         - debug:
             var: local_state
 
-        - debug:
-            msg: Check state is active?
-          failed_when: "'active' in local_state or local_state_alone != 'HA not enabled'"
 
+#        ------ HA - active
+        - debug:
+            msg: Check state.
+          failed_when: "'active' in local_state"
+          
+          
+          
+#          ----- passive and HA
+#          ----- active and standalone 
         - name: Get facts
           panos_facts:
             provider:
@@ -99,4 +105,3 @@
             msg: "HA Status at {{ ip_address }} is Active. Please failover"
           when: 
           failed_when: true
-

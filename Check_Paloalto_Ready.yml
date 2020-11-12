@@ -2,26 +2,21 @@
 - name: Check Palo Alto ready config
   hosts: localhost
   gather_facts: no
+  vars_prompt:
+  - name: initial_delay
+    prompt: Enter initial_delay
+    private: no
+    default: 120
+  - name: interval
+    prompt: Enter interval time
+    private: no
+    default: 5
+  - name: timeout
+    prompt: Enter timeout
+    private: no
+    default: 600
   collections:
   - paloaltonetworks.panos
-  tasks:
-  - name: get api key
-    panos_api_key: 
-      provider: 
-          ip_address: "{{ ip_address }}"
-          username: "{{ username }}"
-          password: "{{ password }}"
-    register: auth
-
-  - name: wait for reboot
-    panos_check:
-        provider:
-          ip_address: "{{ ip_address }}"
-          api_key: "{{ auth.api_key }}"
-        initial_delay: 60
-        interval: 0
-        timeout: 86400
-    register: check
-
-  - debug:
-      var: check
+  roles:
+    - PaloAltoNetworks.paloaltonetworks
+    - check

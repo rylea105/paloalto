@@ -1,6 +1,5 @@
 policy_name,source_name,source_ip,destination_name,destination_ip,service,service_type,application
-Test_Standard_rule1,1.1.1.1,1.1.1.1,2.2.2.2,2.2.2.2,"1111,
-1110",tcp,icmp
+Test_Standard_rule1,1.1.1.1,1.1.1.1,2.2.2.2,2.2.2.2,"1111, 1110",tcp,icmp
 Test_Standard_rule2,3.3.3.3,3.3.3.3,4.4.4.4,4.4.4.4,1112,tcp,icmp
 Test_Standard_rule2,5.5.5.5,5.5.5.5,,,,,
 Test_Standard_rule2,6.6.6.6,6.6.6.6,,,,,

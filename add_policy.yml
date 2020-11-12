@@ -93,7 +93,7 @@
       source_name: []
       destination_name: []
       service_name: []
-    when: rule_policy.service == "" 
+    #when: rule_policy.service == "" 
 
   - name: set application_list to 'any'
     set_fact:
